@@ -1,0 +1,25 @@
+#content{
+    padding-top: 30px;
+}
+
+#topic-name{
+    display: flex;
+    justify-content: center;
+    font-size: 40px;
+}
+
+.image-container{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#image{
+    display: flex;
+    justify-content: center;
+}
+
+#image img{
+    width: 640px;
+    height: 360px;
+    margin-bottom: 30px;
+}

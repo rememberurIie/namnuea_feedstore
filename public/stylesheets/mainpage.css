@@ -5,6 +5,11 @@
   font-style: normal;
 }
 
+html, body {
+  height: 100%; /* ทำให้หน้าเว็บและเนื้อหามีความสูงเต็มหน้าจอ */
+  margin: 0;
+}
+
 div {
   font-family: 'Noto Sans Thai', sans-serif;
 }
@@ -12,13 +17,12 @@ div {
 #login{
   display: flex;
   justify-content: flex-end;
-  padding-top: 30px;
-
+  padding-top: 40px;
   font-weight: bold;
 }
 
 #header {
-  padding-top: 15px;
+  padding-top: -5px;
 
 }
 
@@ -63,11 +67,13 @@ a:active {
 
 .mySlides {
   width: 1110px;
-  height: 450px;
+  height: 350px;
 }
 .w3-left, .w3-right, .w3-badge {
-  cursor:pointer
+  cursor:pointer;
+  color: black;
 }
+
 .w3-badge {
   height: 18px;  /* Adjust height as needed */
   width: 18px;   /* Set width equal to height to maintain circular shape */
@@ -77,4 +83,29 @@ a:active {
   border-radius: 50%;
   display: inline-block;
   transition: background-color 0.6s ease;
+}
+
+#footer {
+  width: 100%;
+  padding-top: 40px;
+  padding-bottom: 20px;
+  background-color: rgb(22, 22, 22);
+  display: flex;
+  justify-content: center;
+}
+
+
+#foot-nav {
+  color: rgb(230, 230, 230);
+}
+
+#foot-nav a{
+  color: rgb(230, 230, 230);
+}
+
+#foot-nav p{
+  margin-top: 10px;
+  color: white;
+  display: flex;
+  justify-content: center;
 }
