@@ -35,7 +35,13 @@ div {
 #logo img {
   width: 200px;
   height: auto;
+  display: flex;
+  justify-content: center;
+}
 
+#logo{
+  display: flex;
+  justify-content: center;
 }
 
 #icon-cart{
@@ -65,10 +71,7 @@ a:active {
   justify-content: center;
 }
 
-.mySlides {
-  width: 1110px;
-  height: 350px;
-}
+
 .w3-left, .w3-right, .w3-badge {
   cursor:pointer;
   color: black;

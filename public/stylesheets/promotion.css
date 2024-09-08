@@ -20,6 +20,6 @@
 
 #image img{
     width: 640px;
-    height: 360px;
+    height: auto;
     margin-bottom: 30px;
 }
