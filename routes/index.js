@@ -14,6 +14,10 @@ router.get('/promotion', function(req, res, next) {
   res.render('promotion', { title: 'Promotion' });
 });
 
+router.get('/article', function(req, res, next) {
+  res.render('article', { title: 'Article' });
+});
+
 router.get('/location', function(req, res, next) {
   res.render('location', { title: 'Location' });
 });
