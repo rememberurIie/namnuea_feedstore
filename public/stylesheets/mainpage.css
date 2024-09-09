@@ -35,13 +35,6 @@ div {
 #logo img {
   width: 200px;
   height: auto;
-  display: flex;
-  justify-content: center;
-}
-
-#logo{
-  display: flex;
-  justify-content: center;
 }
 
 #icon-cart{

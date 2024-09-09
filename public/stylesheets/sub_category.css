@@ -1,0 +1,78 @@
+
+#content{
+ padding-top: 30px;
+}
+
+#topic-name{
+ display: flex;
+ justify-content: center;
+ font-size: 40px;
+}
+
+#topic-pic{
+ display: block; /* Ensure images are block elements */
+ margin: 0 auto;
+ height: 300px;
+ width: auto;
+}
+
+#path{
+ font-weight: bold;
+ color: green;
+ font-size: 16px
+}
+
+@media (min-width: 990px){
+ #selector{
+  padding-top: 40px;
+  padding-left: 7%;
+  padding-right: 7%;
+ }
+}
+
+@media (min-width: 1366px){
+ #selector{
+  padding-top: 40px;
+  padding-left: 17%;
+  padding-right: 17%;
+ }
+}
+
+#image {
+ padding-bottom: 30px;
+ padding-top: 30px;
+}
+
+#image img{
+ border-radius: 15%;
+ height: 200px;
+ display: block; /* Ensure images are block elements */
+ margin: 0 auto; /* Center the image horizontally */
+ 
+}
+
+.button{
+ margin-top: 10px;
+ display: flex;
+ justify-content: center
+}
+
+#image p{
+ padding-top: 15px;
+ display: flex;
+ justify-content: center;
+ font-weight: bold;
+}
+
+.button button{
+ margin-left: 5px;
+ margin-right: 5px;
+ display: flex;
+ justify-content: center
+}
+
+#sub-menu {
+ margin-top : 30px;
+ display: flex;
+ justify-content: center;
+}
