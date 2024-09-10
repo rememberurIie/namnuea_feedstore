@@ -2,8 +2,8 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/sub_category.css'/>
     <link rel='stylesheet' href='/stylesheets/mainpage.css'/>
+    <link rel='stylesheet' href='/stylesheets/sub_category.css'/>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -18,13 +18,13 @@
           </div>
 
           <div id="login" class="col-md-6">
-            <i id="icon-cart" href="#" class="bi bi-cart4"></i>
+            <i id="icon-cart" href="/cart" class="bi bi-cart4"></i>
             &nbsp;&nbsp;&nbsp;
-            <a href="#" style="margin-top: 5px;">เข้าสู่ระบบ</a>
+            <a href="/login" style="margin-top: 5px;">เข้าสู่ระบบ</a>
             &nbsp;&nbsp;&nbsp;
             <p style="margin-top:4px;">|</p>
             &nbsp;&nbsp;&nbsp;
-            <a href="#" style="margin-top: 5px;">สมัครสมาชิก</a>
+            <a href="/register" style="margin-top: 5px;">สมัครสมาชิก</a>
           </div>
 
         </div>
@@ -40,7 +40,7 @@
             &nbsp;&nbsp;&nbsp;
             <p style="margin-top:4px;">|</p>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="/category" style="margin-top: 5px;  font-weight: bold;">หมวดหมู่</a>
+            <a href="/category" style="margin-top: 5px; font-weight: bold;">หมวดหมู่</a>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <p style="margin-top:4px;">|</p>
             &nbsp;&nbsp;&nbsp;&nbsp;
@@ -63,29 +63,28 @@
 
       <div id="path" class="row">
         <div class="col-md-12" style="display: flex; justify-content: center;">
-          <p><a style="color: green " href="/">หน้าแรก</a>&nbsp;/&nbsp;<a style="color: green" href="/category" font-weight: bold;>หมวดหมู่</a>&nbsp;/&nbsp;<a style="color: green" href="/category/dog" font-weight: bold;>สุนัข</a></p>
-        </div>
+          <p><a style="color: green " href="/">หน้าแรก</a>&nbsp;/&nbsp;<a style="color: green" href="/category" font-weight: bold;>หมวดหมู่</a></p>        </div>
       </div>
 
       <div id="topic">
-         <p id="topic-name">สุนัข</p>
-         <img id="topic-pic" src="https://diamondpet.storage.googleapis.com/wp-content/uploads/2023/03/23142354/Dog-Family-Bags402x.png">  
+         <p id="topic-name">ปลา</p>
+         <img id="topic-pic" src="https://inwfile.com/s-fs/jp4c9o.gif">  
       </div>
 
       <div id="sub-menu">
-         <a href="/category/dog/dogfood" style="margin-top: 5px; font-weight: bold;">อาหารสุนัข</a>
+         <a href="/category/catfish" style="margin-top: 5px;">ปลาดุก</a>
          &nbsp;&nbsp;&nbsp;
          <p style="margin-top:4px;">|</p>
          &nbsp;&nbsp;&nbsp;&nbsp;
-         <a href="/category/dog/medicine" style="margin-top: 5px;">อาหารเสริม / ยา</a>
+         <a href="/category/herbivorous_fish" style="margin-top: 5px;">ปลากินพืช</a>
          &nbsp;&nbsp;&nbsp;&nbsp;
          <p style="margin-top:4px;">|</p>
          &nbsp;&nbsp;&nbsp;&nbsp;
-         <a href="/category/dog/collar" style="margin-top: 5px;">ปลอกคอ</a>
+         <a href="/category/beautiful_fish" style="margin-top: 5px;">ปลาสวยงาม</a>
          &nbsp;&nbsp;&nbsp;&nbsp;
          <p style="margin-top:4px;">|</p>
          &nbsp;&nbsp;&nbsp;&nbsp;
-         <a href="/category/dog/toy" style="margin-top: 5px;">ของเล่น</a>
+         <a href="/category/koi_fish" style="margin-top: 5px;  font-weight: bold;">ปลาคราฟ</a>
        </div>
 
       <div id="selector" class="row">
@@ -141,14 +140,13 @@
 
     </div>
 
-
-
+    
     <div id="footer">
 
       <div id="foot-nav">
-        <a href="/" style="margin-top: 5px;">หน้าแรก</a>
+        <a href="/" style="margin-top: 5px; font-weight: bold;">หน้าแรก</a>
         &nbsp;&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="/category" style="margin-top: 5px;  font-weight: bold;">หมวดหมู่</a>
+        <a href="/category" style="margin-top: 5px;">หมวดหมู่</a>
 
         &nbsp;&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;
         <a href="/promotion" style="margin-top: 5px;">โปรโมชั่น</a>
