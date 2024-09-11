@@ -1,104 +1,57 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/mainpage.css'/>
-    <link rel='stylesheet' href='/stylesheets/promotion.css'/>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  </head>
-  <body>
-    <div id="main">
 
-      <div  class="container">
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link rel='stylesheet' href='/stylesheets/mainpage.css' />
+  <link rel='stylesheet' href='/stylesheets/promotion.css' />
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
 
-        <div id="login-header" class="row">
+<body>
+  <div id="main">
 
-          <div class="col-md-6"></div>
+    <div class="container">
 
-          <div id="login" class="col-md-6">
-            <i id="icon-cart" href="/cart" class="bi bi-cart4"></i>
-            &nbsp;&nbsp;&nbsp;
-            <a href="/login" style="margin-top: 5px;">เข้าสู่ระบบ</a>
-            &nbsp;&nbsp;&nbsp;
-            <p style="margin-top:4px;">|</p>
-            &nbsp;&nbsp;&nbsp;
-            <a href="/register" style="margin-top: 5px;">สมัครสมาชิก</a>
-          </div>
+      <%- include('partials/login-header') %>
 
-        </div>
+        <%- include('partials/header') %>
 
-        <div id="header" class="row">
+    </div>
+  </div>
 
-          <div id="logo" class="col-md-4 col-md-4 d-flex justify-content-md-start justify-content-center">
-            <img src="https://img2.pic.in.th/pic/360_F_253083014_MH4h16llY6063TBkG8h7SDBuSyaOV2vi.jpg">
-          </div>
 
-          <div id="menu" class="col-md-8">
-            <a href="/" style="margin-top: 5px;">หน้าแรก</a>
-            &nbsp;&nbsp;&nbsp;
-            <p style="margin-top:4px;">|</p>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="/category" style="margin-top: 5px;">หมวดหมู่</a>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <p style="margin-top:4px;">|</p>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="/promotion" style="margin-top: 5px; font-weight: bold;">โปรโมชั่น</a>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <p style="margin-top:4px;">|</p>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="/article" style="margin-top: 5px;">บทความเพื่อสัตว์เลี้ยง</a>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <p style="margin-top:4px;">|</p>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="/location" style="margin-top: 5px;">ที่ตั้งร้านค้า</a>
-          </div>
+  <div id="content">
 
-        </div>
+    <div id="topic">
+      <p id="topic-name">โปรโมชั่น</p>
+    </div>
+
+    <div class="image-container">
+      <div id="image">
+        <img
+          src="https://cdn.prod.website-files.com/627532e043f5505c844dd553/65e20cdc925718c293a336bd_Facebook_ads_size_banner_2024_-_Spider_AF.png"
+          class="img-fluid" alt="Responsive image">
       </div>
-      
-
-      <div id="content">
-  
-        <div id="topic">
-          <p id="topic-name">โปรโมชั่น</p>
-        </div>
-  
-        <div class="image-container">
-          <div id="image">
-            <img src="https://cdn.prod.website-files.com/627532e043f5505c844dd553/65e20cdc925718c293a336bd_Facebook_ads_size_banner_2024_-_Spider_AF.png" class="img-fluid" alt="Responsive image">
-          </div>
-          <div id="image">
-            <img src="https://cdn.shopify.com/app-store/listing_images/2389894ab120b13b73184efc82ef29e0/desktop_screenshot/CNWJv6bv2vsCEAE=.png?height=720&width=1280" class="img-fluid" alt="Responsive image">
-          </div>
-          <div id="image">
-            <img src="https://i.ytimg.com/vi/enK8J6MK_l8/maxresdefault.jpg" class="img-fluid" alt="Responsive image">
-          </div>
-        </div>
+      <div id="image">
+        <img
+          src="https://cdn.shopify.com/app-store/listing_images/2389894ab120b13b73184efc82ef29e0/desktop_screenshot/CNWJv6bv2vsCEAE=.png?height=720&width=1280"
+          class="img-fluid" alt="Responsive image">
       </div>
-  
-      <div id="footer">
-
-        <div id="foot-nav">
-          <a href="/" style="margin-top: 5px;">หน้าแรก</a>
-          &nbsp;&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;
-          <a href="/category" style="margin-top: 5px;">หมวดหมู่</a>
-
-          &nbsp;&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;
-          <a href="/promotion" style="margin-top: 5px; font-weight: bold;">โปรโมชั่น</a>
-
-          &nbsp;&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;
-          <a href="/article" style="margin-top: 5px;">บทความเพื่อสัตว์เลี้ยง</a>
-
-          &nbsp;&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;
-          <a href="/location" style="margin-top: 5px;">ที่ตั้งร้านค้า</a>
-          <br>
-          <div style=" height: 1px; margin-top: 5px; margin-bottom: 5x"></div>
-          <p style="color: rgb(167, 167, 167);">Copyright &copy;2023 Designed by n.tha._.north</p>
-
-        </div>
+      <div id="image">
+        <img src="https://i.ytimg.com/vi/enK8J6MK_l8/maxresdefault.jpg" class="img-fluid" alt="Responsive image">
       </div>
     </div>
-  </body>
+  </div>
+
+  <%- include('partials/footer') %>
+    </div>
+    </div>
+</body>
+
 </html>
