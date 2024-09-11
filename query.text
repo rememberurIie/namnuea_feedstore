@@ -1,0 +1,3 @@
+sub-menu
+SELECT * FROM `subcategories` WHERE CategoryID = (SELECT CategoryID FROM categories WHERE CategoryName = "cat");
+
