@@ -81,6 +81,17 @@ a:active {
   transition: background-color 0.6s ease;
 }
 
+#content{
+  animation: fadeIn 2s;
+  min-height: calc(100vh - 300px);
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  50% { opacity: 0.85;}
+  100% { opacity: 1; }
+}
+
 #footer {
   width: 100%;
   padding-top: 40px;
@@ -104,14 +115,4 @@ a:active {
   color: white;
   display: flex;
   justify-content: center;
-}
-
-#content{
-  animation: fadeIn 2s;
-}
-
-@keyframes fadeIn {
-  0% { opacity: 0; }
-  50% { opacity: 0.85;}
-  100% { opacity: 1; }
 }

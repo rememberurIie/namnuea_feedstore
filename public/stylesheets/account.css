@@ -27,3 +27,7 @@
 #submit_button{
  margin-top: 30px;
 }
+
+#password-hint p{
+ font-size: 14px;
+}
