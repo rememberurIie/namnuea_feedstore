@@ -41,6 +41,21 @@ router.get('/register', function(req, res, next) {
 //   res.render('subCategories', {AccountName: req.session.AccountName, title: 'Product' });
 // });
 
+//---------------------admin----------------------//
+
+//login
+router.get('/overall', function(req, res, next) {
+  res.render('admin/overall', { title: 'Location' });
+});
+
+//login
+router.get('/order_all', function(req, res, next) {
+  res.render('admin/order_all', { title: 'Location' });
+});
+
+router.get('/order_manage', function(req, res, next) {
+  res.render('admin/order_manage', { title: 'Location' });
+});
 
 //---------------------category----------------------//
 
