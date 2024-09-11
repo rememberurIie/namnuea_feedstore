@@ -26,9 +26,8 @@ router.post('/auth', function (req, res) {
 
                     if (result) {
                         req.session.loggedin = true;
-                        req.session.UserName = UserName; // เก็บ UserName ไว้ใน session
-                        console.log('UserName from login:', UserName);
-                        console.log('Session UserName:', req.session.UserName);
+                        req.session.AccountName = results[0].AccountName; // เก็บ UserName ไว้ใน session
+                        console.log('Session AccountName:', req.session.AccountName);
 
                         // เปลี่ยนเส้นทางตาม AccountType
                         if (results[0].AccountType === 'Admin' || results[0].AccountType === 'Employee') {

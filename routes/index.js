@@ -5,23 +5,23 @@ var session = require('express-session');
 /* GET home page. */
 
 router.get('/', function(req, res) {
-  res.render('index', { UserName: req.session.UserName , title: 'Express' });
+  res.render('index', { AccountName: req.session.AccountName , title: 'Express' });
 });
 
 router.get('/category', function(req, res, next) {
-  res.render('category', { title: 'Category' });
+  res.render('category', {AccountName: req.session.AccountName , title: 'Category' });
 });
 
 router.get('/promotion', function(req, res, next) {
-  res.render('promotion', { title: 'Promotion' });
+  res.render('promotion', {AccountName: req.session.AccountName , title: 'Promotion' });
 });
 
 router.get('/article', function(req, res, next) {
-  res.render('article', { title: 'Article' });
+  res.render('article', {AccountName: req.session.AccountName , title: 'Article' });
 });
 
 router.get('/location', function(req, res, next) {
-  res.render('location', { title: 'Location' });
+  res.render('location', {AccountName: req.session.AccountName , title: 'Location' });
 });
 
 //---------------------account----------------------//

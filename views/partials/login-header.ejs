@@ -3,8 +3,8 @@
     <div id="login" class="col-md-6">
         <i id="icon-cart" href="/cart" class="bi bi-cart4"></i>
         &nbsp;&nbsp;&nbsp;
-        <% if (typeof UserName !== 'undefined') { %>
-            <span>ยินดีต้อนรับ, <%= UserName %>!</span>
+        <% if (typeof AccountName !== 'undefined') { %>
+            <span>ยินดีต้อนรับ, <%= AccountName %>!</span>
             &nbsp;&nbsp;&nbsp;
             <a href="/logout" style="margin-top: 5px;">ออกจากระบบ</a>
         <% } else { %>
