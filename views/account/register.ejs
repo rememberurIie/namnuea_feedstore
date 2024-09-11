@@ -19,7 +19,7 @@
 
             <%- include('../partials/login-header') %>
 
-            <%- include('../partials/header') %>
+                <%- include('../partials/header') %>
 
         </div>
     </div>
@@ -28,20 +28,43 @@
 
 
         <div id="topic">
-            <p id="topic-name">เข้าสู่ระบบ</p>
+            <p id="topic-name">สมัครสมาชิก</p>
         </div>
 
-        <div id="login-form">
+        <div id="register-form">
             <div class="form-group">
-                <label for="name">Username</label>
-                <input type="text" class="form-control" id="name" name="name" required>
+                <form action="/register" method="post">
+                    <label for="uname">Username</label>
+                    <input type="text" class="form-control" id="UserName" name="UserName" required>
+
+                    <label for="pwd">Password</label>
+                    <input type="password" class="form-control" id="Pwd" name="Pwd" required>
+
+                    <label for="name">ชื่อ-สกุล</label>
+                    <input type="text" class="form-control" id="AccountName" name="AccountName" required>
+
+                    <label for="phone">เบอร์โทร</label>
+                    <input type="tel" class="form-control" id="Phone" name="Phone" required>
+
+                    <label for="text">จังหวัด</label>
+                    <input type="text" class="form-control" id="Province" name="Province" required>
+
+                    <label for="text">อำเภอ</label>
+                    <input type="text" class="form-control" id="District" name="District" required>
+
+                    <label for="text">ตำบล</label>
+                    <input type="text" class="form-control" id="SubDistrict" name="SubDistrict" required>
+
+                    <label for="text">ไปรษณีย์</label>
+                    <input type="text" class="form-control" id="PostalCode" name="PostalCode" required>
+
+                    <button type="submit" id="submit_button" class="btn btn-dark btn-block">สมัครสมาชิก</button>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="email">Password</label>
-                <input type="email" class="form-control" id="email" name="email" required>
-            </div>
-            <button type="submit" id="submit_button" class="btn btn-dark btn-block">Login</button>
         </div>
+
+    </div>
+    </div>
 
     </div>
 

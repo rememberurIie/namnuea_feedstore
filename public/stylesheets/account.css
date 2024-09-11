@@ -9,7 +9,7 @@
 }
 
 @media (min-width: 990px){
- #login-form{
+ #login-form, #register-form{
   padding-top: 20px;
   padding-left: 30%;
   padding-right: 30%;
@@ -17,7 +17,7 @@
 }
 
 @media (min-width: 1366px){
- #login-form{
+ #login-form, #register-form{
   padding-top: 40px;
   padding-left: 37%;
   padding-right: 37%;
