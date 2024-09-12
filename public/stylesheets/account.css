@@ -6,22 +6,35 @@
  display: flex;
  justify-content: center;
  font-size: 40px;
+ margin-bottom: -30px;
+}
+
+.form-group{
+    padding-top: 20px;
+    padding-left: 20vw;
+    padding-right: 20vw;
 }
 
 @media (min-width: 990px){
- #login-form, #register-form{
-  padding-top: 20px;
-  padding-left: 30%;
-  padding-right: 30%;
- }
+    .form-group{
+    padding-top: 20px;
+    padding-left: 32%;
+    padding-right: 32%;
+    }
 }
+    
 
 @media (min-width: 1366px){
- #login-form, #register-form{
-  padding-top: 40px;
-  padding-left: 37%;
-  padding-right: 37%;
- }
+    .form-group{
+        padding-top: 40px;
+        padding-left: 37%;
+        padding-right: 37%;
+    }
+}
+   
+label{
+    margin-top: 10px;
+
 }
 
 #submit_button{
