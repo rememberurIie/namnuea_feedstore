@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&display=swap');
+
 @font-face {
   font-family: 'Noto Sans Thai';
   src: url('/fonts/NotoSansThai.ttf') format('ttf');
@@ -9,6 +11,8 @@ html, body {
   height: 100%; /* ทำให้หน้าเว็บและเนื้อหามีความสูงเต็มหน้าจอ */
   margin: 0;
 }
+
+
 
 div {
   font-family: 'Noto Sans Thai', sans-serif;
