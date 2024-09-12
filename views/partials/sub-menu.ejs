@@ -1,0 +1,10 @@
+<div id="sub-menu">
+    <% Subcategories.forEach(function(item, index) {%>
+        <a href='/product/<%= item.SubCategoryID %>' style="margin-top: 5px; ">
+            <%= item.Description %>
+        </a>
+        &nbsp;&nbsp;&nbsp;
+        <p style="margin-top:4px;">|</p>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <%} ); %>
+</div>
