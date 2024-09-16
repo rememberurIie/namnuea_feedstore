@@ -24,15 +24,19 @@ router.get('/location', function(req, res, next) {
   res.render('location', {AccountName: req.session.AccountName , title: 'Location' });
 });
 
+router.get('/cart', function(req, res, next) {
+  res.render('cart', {AccountName: req.session.AccountName , title: 'Cart' });
+});
+
 //---------------------account----------------------//
 
 //login
 router.get('/login', function(req, res, next) {
-  res.render('account/login', { title: 'Location' });
+  res.render('account/login', { title: 'Login' });
 });
 
 router.get('/register', function(req, res, next) {
-  res.render('account/register', { title: 'Location' });
+  res.render('account/register', { title: 'Register' });
 });
 
 //---------------------category----------------------//
