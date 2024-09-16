@@ -34,7 +34,7 @@ router.post('/register', (req, res) => {
                 if (err) {
                     res.send(err); // หากเกิดข้อผิดพลาด ให้ส่งข้อผิดพลาดกลับไป
                 } else {
-                    res.redirect('/'); // สำเร็จให้ redirect กลับไปที่หน้าแรก
+                    res.redirect('/?register=success'); // สำเร็จให้ redirect กลับไปที่หน้าแรก
                 }
             });
         }
