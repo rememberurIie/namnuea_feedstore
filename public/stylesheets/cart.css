@@ -38,3 +38,10 @@ th {
 .btn-danger {
     background-color: #f44336;
 }
+
+#submit{
+    padding-top: 20px;
+    margin-right: 13.4%;
+    display: flex;
+    justify-content: flex-end
+}
