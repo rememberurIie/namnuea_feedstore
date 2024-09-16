@@ -33,11 +33,11 @@ router.post('/auth', function (req, res) {
 
                         // เปลี่ยนเส้นทางตาม AccountType
                         if (results[0].AccountType === 'Admin' || results[0].AccountType === 'Employee') {
-                            res.redirect('/order_all'); // เปลี่ยนเส้นทางไปยังหน้า admin
+                            res.redirect('/order_all?login=success'); // เปลี่ยนเส้นทางไปยังหน้า admin
                         } else if (results[0].AccountType === 'Customer') {
-                            res.redirect('/'); // เปลี่ยนเส้นทางไปยังหน้า customer
+                            res.redirect('/?login=success'); // เปลี่ยนเส้นทางไปยังหน้า customer
                         } else {
-                            res.redirect('/'); // Default redirect if AccountType is unknown
+                            res.redirect('/?login=success'); // Default redirect if AccountType is unknown
                         }
                     } else {
                         res.status(401).send('Incorrect Username and/or Password!');

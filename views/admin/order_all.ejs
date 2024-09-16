@@ -32,4 +32,20 @@
 	</div>
 
 </body>
+<script>
+	// Function to display alerts based on query parameters
+	function displayAlert() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const loginStatus = urlParams.get('login');
+
+            if (loginStatus === 'success') {
+                alert('Login Success as Admin!');
+            } else if (loginStatus === 'failed') {
+                alert('Login Failed. Please try again.');
+            }
+        }
+
+        // Call the function to display the alert when the page loads
+        window.onload = displayAlert;
+</script>
 </html>
