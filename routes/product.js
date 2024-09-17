@@ -28,13 +28,15 @@ router.get('/category/:CategoryName', function (req, res, next) {
                     // เรนเดอร์หน้า subCategory พร้อมกับส่งข้อมูลที่ได้จากฐานข้อมูล
                     req.session.SubcategoryImage = subcategories[0].CategoryImage;
                     req.session.Title = subcategories[0].CategoryDescription;
+                    req.session.CategoryName = categoryName;
                     req.session.Subcategories = subcategories;
                     res.render('subCategory', {
                         AccountName: req.session.AccountName,
                         SubcategoryImage: req.session.SubcategoryImage,
                         Title: req.session.Title,
                         Subcategories: req.session.Subcategories,
-                        Products: products
+                        Products: products,
+                        CategoryName: req.session.CategoryName,
                     });
                 }
             });
@@ -54,6 +56,7 @@ router.get('/product/:SubCategoryID', function (req, res) {
                 SubcategoryImage: req.session.SubcategoryImage,
                 Title: req.session.Title,
                 Subcategories: req.session.Subcategories,
+                CategoryName: req.session.CategoryName,
             });
         }
     });
