@@ -32,26 +32,8 @@
             <%- include('partials/product/topic') %>
 
                 <%- include('partials/product/sub-menu') %>
-
-                <div id="selector" class="row">
-
-
-                    <% Products.forEach(function(item, index) {%>
-                        <div id="image" class="col-lg-3">
-                            <img src="<%= item.Image %>">
-                            <p>
-                                <%= item.ProductName %>
-                            </p>
-                            <p>ราคา <%= item.Price %> บาท</p>
-                            <div class="button">
-                                <button type="button" class="btn btn-light">Add to Cart</button>
-                                <button type="button" class="btn btn-dark">Buy Now</button>
-                            </div>
-                        </div>
-                        <%} ); %>
-
-
-            </div>
+                
+                    <%- include('partials/product/item') %>
 
     </div>
 
