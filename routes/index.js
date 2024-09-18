@@ -28,6 +28,10 @@ router.get('/cart', function(req, res, next) {
   res.render('cart', {AccountName: req.session.AccountName , title: 'Cart' });
 });
 
+router.get('/checkout', function(req, res, next) {
+  res.render('checkout', {AccountName: req.session.AccountName , title: 'Checkout' });
+});
+
 //---------------------account----------------------//
 
 //login
@@ -38,6 +42,12 @@ router.get('/login', function(req, res, next) {
 router.get('/register', function(req, res, next) {
   res.render('account/register', { title: 'Register' });
 });
+
+//see history orders for account is in session
+router.get('/myaccount', function(req, res, next) {
+  res.render('account/myaccount', {AccountName: req.session.AccountName , title: 'MyAccount' });
+});
+
 
 //---------------------category----------------------//
 

@@ -12,15 +12,15 @@
 table {
     margin-left: auto;
     margin-right: auto;
-    width: 73%;
+    width: 60%;
     border-collapse: collapse;
 }
 tr{
     text-align: center;
 }
 th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
+    border: 1px solid #c4828200;
+    padding: 15px;
     text-align: center;
 }
 th {
@@ -40,8 +40,8 @@ th {
 }
 
 #submit{
-    padding-top: 20px;
-    margin-right: 13.4%;
+    padding-top: 30px;
+    margin-right: 19.9%;
     display: flex;
     justify-content: flex-end
 }

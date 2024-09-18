@@ -2,9 +2,9 @@
     <div class="col-md-6"></div>
     <div id="login" class="col-md-6">        
         <% if (typeof AccountName !== 'undefined') { %>
-            <a id="icon-cart" href="/cart" class="bi bi-cart4"></a>
+            <a id="icon-cart" style="margin-top: -1px;" href="/cart" class="bi bi-cart-fill""></a>
             &nbsp;&nbsp;&nbsp;
-            <a style="margin-top: 5px;">ยินดีต้อนรับ, <%= AccountName %>!</a>
+            <p style="margin-top: 5px;">ยินดีต้อนรับ, <a style="margin-top: 5px;" href="/myaccount"><%= AccountName %>!</a></p>
             &nbsp;&nbsp;&nbsp;
             <p style="margin-top:4px;">|</p>
             &nbsp;&nbsp;&nbsp;
