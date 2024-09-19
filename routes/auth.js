@@ -25,7 +25,7 @@ router.post('/auth', function (req, res) {
                     }
 
                     if (result) {
-                        req.session.loggedin = true;
+                        req.session.loggedIn = true;
                         req.session.AccountID = results[0].AccountID;
                         req.session.AccountName = results[0].AccountName;
                         req.session.AccountType = results[0].AccountType; // เก็บ UserName ไว้ใน session

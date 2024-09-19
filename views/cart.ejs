@@ -14,7 +14,6 @@
 </head>
 
 <body>
-
     <div id="main">
         <div class="container">
 
@@ -42,18 +41,28 @@
                 </tr>
             </thead>
             <tbody>
-                <% CartItems.forEach(function(item) { %>
+                <% CartItems.forEach(function(item, index) { %>
                     <tr>
                         <td><img src="<%= item.Image %>" alt="<%= item.ProductName %>" height="50" width="50"></td>
-                        <td><%= item.ProductName %></td>
-                        <td>฿100</td>
                         <td>
-                            <button class="btn" onclick="changeQuantity(-1)">-</button>
-                            <span id="qty1"><%= item.Quantity %></span>
-                            <button class="btn" onclick="changeQuantity(1)">+</button>
+                            <%= item.ProductName %>
                         </td>
-                        <td id="total1"><%= item.Price %></td>
-                        <td><button class="btn btn-danger" onclick="removeItem(this)">ลบ</button></td>
+                        <td>฿<%= item.Price %>
+                        </td>
+                        <td>
+                            <button class="btn"
+                                onclick="changeQuantity(-1, '<%= index %>', '<%= item.Price %>')">-</button>
+                            <span id="qty<%= index %>">
+                                <%= item.Quantity %>
+                            </span>
+                            <button class="btn"
+                                onclick="changeQuantity(1, '<%= index %>', '<%= item.Price %>')">+</button>
+                        </td>
+                        <td id="total<%= index %>">฿<%= item.Price * item.Quantity %>
+                        </td>
+                        <td><button class="btn btn-danger"
+                                onclick="removeItem(this, '<%= item.ProductID %>')">ลบ</button>
+                        </td>
                     </tr>
                     <% }) %>
             </tbody>
@@ -73,24 +82,45 @@
 
         </div>
 </body>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    function changeQuantity(amount) {
-        // ตัวอย่างการเปลี่ยนแปลงจำนวนสินค้า
-        var qtyElem = document.getElementById('qty1');
-        var totalElem = document.getElementById('total1');
-        var currentQty = parseInt(qtyElem.textContent);
-        var newQty = currentQty + amount;
-        if (newQty < 1) newQty = 1;
-        qtyElem.textContent = newQty;
-        var price = totalElem.nodeValue; // ราคา
-        totalElem.textContent = '฿' + (newQty + price);
+
+    function changeQuantity(amount, index, price) {
+        var quantityElem = document.getElementById('qty' + index);
+        var currentQuantity = parseInt(quantityElem.textContent);
+        var newQuantity = currentQuantity + amount;
+
+        if (newQuantity >= 1) { // ตรวจสอบให้แน่ใจว่า quantity ไม่ต่ำกว่า 1
+            quantityElem.textContent = newQuantity;
+
+            var totalElem = document.getElementById('total' + index);
+            var newTotal = newQuantity * parseFloat(price); // คำนวณราคาสินค้าใหม่
+            totalElem.textContent = '฿' + newTotal.toFixed(2); // แสดงผลเป็นทศนิยม 2 ตำแหน่ง
+        }
     }
 
-    function removeItem(button) {
-        var row = button.parentElement.parentElement;
-        row.parentElement.removeChild(row);
-    }
+
+    function removeItem(button, productID) {
+        var AccountID = "<%= AccountID %>";
+            var row = button.closest('tr'); // ใช้ closest() เพื่อหาตารางแถวที่ถูกต้อง
+
+            $.ajax({
+                url: '/cart/remove',
+                method: 'POST',
+                data: {
+                    AccountID: AccountID,
+                    ProductID: productID
+                },
+                success: function (response) {
+                    alert(response);
+                    row.remove(); // ลบแถวจาก DOM หลังจากได้รับการตอบกลับที่สำเร็จ
+                },
+                error: function (error) {
+                    alert('เกิดข้อผิดพลาดในการลบสินค้าsss');
+                    console.log("Error:", error); // แสดงข้อมูลข้อผิดพลาด
+                }
+            });
+        }
 </script>
 
 </html>
