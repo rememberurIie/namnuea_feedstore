@@ -5,31 +5,31 @@ var session = require('express-session');
 /* GET home page. */
 
 router.get('/', function(req, res) {
-  res.render('index', { AccountName: req.session.AccountName , title: 'Express' });
+  res.render('index', { AccountID: req.session.AccountID, AccountName: req.session.AccountName , title: 'Express' });
 });
 
 router.get('/category', function(req, res, next) {
-  res.render('category', {AccountName: req.session.AccountName , title: 'Category' });
+  res.render('category', {AccountID: req.session.AccountID, AccountName: req.session.AccountName , title: 'Category' });
 });
 
 router.get('/promotion', function(req, res, next) {
-  res.render('promotion', {AccountName: req.session.AccountName , title: 'Promotion' });
+  res.render('promotion', {AccountID: req.session.AccountID, AccountName: req.session.AccountName , title: 'Promotion' });
 });
 
 router.get('/article', function(req, res, next) {
-  res.render('article', {AccountName: req.session.AccountName , title: 'Article' });
+  res.render('article', {AccountID: req.session.AccountID, AccountName: req.session.AccountName , title: 'Article' });
 });
 
 router.get('/location', function(req, res, next) {
-  res.render('location', {AccountName: req.session.AccountName , title: 'Location' });
+  res.render('location', {AccountID: req.session.AccountID, AccountName: req.session.AccountName , title: 'Location' });
 });
 
 router.get('/cart', function(req, res, next) {
-  res.render('cart', {AccountName: req.session.AccountName , title: 'Cart' });
+  res.render('cart', {AccountID: req.session.AccountID, AccountName: req.session.AccountName , title: 'Cart' });
 });
 
 router.get('/checkout', function(req, res, next) {
-  res.render('checkout', {AccountName: req.session.AccountName , title: 'Checkout' });
+  res.render('checkout', {AccountID: req.session.AccountID, AccountName: req.session.AccountName , title: 'Checkout' });
 });
 
 //---------------------account----------------------//
@@ -45,7 +45,7 @@ router.get('/register', function(req, res, next) {
 
 //see history orders for account is in session
 router.get('/myaccount', function(req, res, next) {
-  res.render('account/myaccount', {AccountName: req.session.AccountName , title: 'MyAccount' });
+  res.render('account/myaccount', {AccountID: req.session.AccountID, AccountName: req.session.AccountName , title: 'MyAccount' });
 });
 
 
