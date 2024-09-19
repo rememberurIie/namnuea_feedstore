@@ -41,33 +41,41 @@
                 </tr>
             </thead>
             <tbody>
-                <% CartItems.forEach(function(item, index) { %>
-                    <tr>
-                        <td><img src="<%= item.Image %>" alt="<%= item.ProductName %>" height="50" width="50"></td>
-                        <td>
-                            <%= item.ProductName %>
-                        </td>
-                        <td>฿<%= item.Price %>
-                        </td>
-                        <td>
-                            <button class="btn"
-                                onclick="changeQuantity(-1, '<%= index %>', '<%= item.Price %>')">-</button>
-                            <span id="qty<%= index %>">
-                                <%= item.Quantity %>
-                            </span>
-                            <button class="btn"
-                                onclick="changeQuantity(1, '<%= index %>', '<%= item.Price %>')">+</button>
-                        </td>
-                        <td id="total<%= index %>">฿<%= item.Price * item.Quantity %>
-                        </td>
-                        <td><button class="btn btn-danger"
-                                onclick="removeItem(this, '<%= item.ProductID %>')">ลบ</button>
-                        </td>
-                    </tr>
-                    <% }) %>
+                <% let totalPrice = 0; %> <!-- Initialize totalPrice -->
+                <% CartItems.forEach(function(item, index) { 
+                    totalPrice += item.Price * item.Quantity; // Add each item's total price to totalPrice 
+                %>
+                <tr>
+                    <td><img src="<%= item.Image %>" alt="<%= item.ProductName %>" height="50" width="50"></td>
+                    <td>
+                        <%= item.ProductName %>
+                    </td>
+                    <td>฿<%= item.Price %>
+                    </td>
+                    <td>
+                        <button class="btn"
+                            onclick="changeQuantity(-1, '<%= index %>', '<%= item.Price %>', '<%= item.ProductID %>')">-</button>
+                        <span id="qty<%= index %>">
+                            <%= item.Quantity %>
+                        </span>
+                        <button class="btn"
+                            onclick="changeQuantity(1, '<%= index %>', '<%= item.Price %>', '<%= item.ProductID %>')">+</button>
+                    </td>
+                    <td id="total<%= index %>">฿<%= item.Price * item.Quantity %>
+                    </td>
+                    <td><button class="btn btn-danger"
+                            onclick="removeItem(this, '<%= item.ProductID %>')">ลบ</button>
+                    </td>
+                </tr>
+                <% }) %>
             </tbody>
-
-        </table>
+            
+            </table>
+            
+            <div id="CurrentTotalPrice">
+                <b>ราคาทั้งหมด : <span id="totalPrice"><%= totalPrice %></span> บาท</b>
+            </div>
+            
 
         <div id="submit">
             <a class="btn btn-secondary" href="/category" style="color: white">ซื้อสินค้าต่อ</a>
@@ -85,42 +93,89 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 
-    function changeQuantity(amount, index, price) {
+    function changeQuantity(amount, index, price, productID) {
         var quantityElem = document.getElementById('qty' + index);
         var currentQuantity = parseInt(quantityElem.textContent);
         var newQuantity = currentQuantity + amount;
 
-        if (newQuantity >= 1) { // ตรวจสอบให้แน่ใจว่า quantity ไม่ต่ำกว่า 1
+        if (newQuantity >= 1) { // Ensure quantity doesn't go below 1
             quantityElem.textContent = newQuantity;
 
             var totalElem = document.getElementById('total' + index);
-            var newTotal = newQuantity * parseFloat(price); // คำนวณราคาสินค้าใหม่
-            totalElem.textContent = '฿' + newTotal.toFixed(2); // แสดงผลเป็นทศนิยม 2 ตำแหน่ง
+            var newTotal = newQuantity * parseFloat(price); // Calculate the new total
+            totalElem.textContent = '฿' + newTotal.toFixed(2); // Display the total with two decimal places
+
+            // Call updateTotalPrice to recalculate the entire cart's total
+            updateTotalPrice();
+
+            // Send the new quantity to the server via AJAX
+            var AccountID = "<%= AccountID %>"; // Make sure AccountID is properly injected
+            
+            $.ajax({
+                url: '/cart/update',
+                method: 'POST',
+                data: {
+                    AccountID: AccountID,
+                    ProductID: productID,  // Make sure you're passing the correct productID
+                    Quantity: newQuantity,
+                    Price: newTotal.toFixed(2)
+                },
+                success: function (response) {
+                    console.log(response); // Handle the success response, if needed
+                },
+                error: function (error) {
+                    alert('เกิดข้อผิดพลาดในการอัปเดตจำนวนสินค้า');
+                    console.log("Error:", error); // Log the error for debugging
+                }
+            });
         }
     }
 
 
+
     function removeItem(button, productID) {
         var AccountID = "<%= AccountID %>";
-            var row = button.closest('tr'); // ใช้ closest() เพื่อหาตารางแถวที่ถูกต้อง
+        var row = button.closest('tr'); // ใช้ closest() เพื่อหาตารางแถวที่ถูกต้อง
 
-            $.ajax({
-                url: '/cart/remove',
-                method: 'POST',
-                data: {
-                    AccountID: AccountID,
-                    ProductID: productID
-                },
-                success: function (response) {
-                    alert(response);
-                    row.remove(); // ลบแถวจาก DOM หลังจากได้รับการตอบกลับที่สำเร็จ
-                },
-                error: function (error) {
-                    alert('เกิดข้อผิดพลาดในการลบสินค้าsss');
-                    console.log("Error:", error); // แสดงข้อมูลข้อผิดพลาด
-                }
-            });
-        }
+        console.log("ProductID: ", productID);
+        console.log("AccountID: ", "<%= AccountID %>");
+
+        $.ajax({
+            url: '/cart/remove',
+            method: 'POST',
+            data: {
+                AccountID: AccountID,
+                ProductID: productID
+            },
+            success: function (response) {
+                alert(response);
+                row.remove(); // ลบแถวจาก DOM หลังจากได้รับการตอบกลับที่สำเร็จ
+                updateTotalPrice(); // update total price that order
+            },
+            error: function (error) {
+                alert('เกิดข้อผิดพลาดในการลบสินค้าsss');
+                console.log("Error:", error); // แสดงข้อมูลข้อผิดพลาด
+            }
+        });
+    }
+
+    function updateTotalPrice() {
+    let totalPrice = 0;
+    let rows = document.querySelectorAll('tbody tr'); // Select all item rows
+
+    rows.forEach(function(row, index) {
+        let qty = parseInt(document.getElementById(`qty${index}`).textContent);
+        let price = parseFloat(row.querySelector('td:nth-child(3)').textContent.replace('฿', ''));
+        totalPrice += price * qty;
+    });
+
+    // Update the total price in the "ราคาทั้งหมด" section
+    document.getElementById('totalPrice').textContent = totalPrice.toFixed(2);
+    }
+
+    // Call updateTotalPrice on page load to initialize the total price correctly
+    document.addEventListener('DOMContentLoaded', updateTotalPrice);
+
 </script>
 
 </html>

@@ -12,17 +12,21 @@
 table {
     margin-left: auto;
     margin-right: auto;
-    width: 60%;
+    width: 80%;
     border-collapse: collapse;
 }
+
+
 tr{
     text-align: center;
 }
+
 th, td {
     border: 1px solid #c4828200;
     padding: 15px;
     text-align: center;
 }
+
 th {
     background-color: #f2f2f2;
 }
@@ -39,9 +43,37 @@ th {
     background-color: #f44336;
 }
 
+#CurrentTotalPrice{
+    padding-top: 15px;
+    margin-right: 9.9%;
+    display: flex;
+    justify-content: flex-end;
+    font-size: 20px;
+}
+
+
+#totalPrice{
+    color: #4CAF50;
+}
+
 #submit{
     padding-top: 30px;
-    margin-right: 19.9%;
+    padding-bottom: 40px;
+    margin-right: 9.9%;
     display: flex;
     justify-content: flex-end
+}
+
+@media (min-width: 1200px) {
+    table {
+        width: 60%;
+    }
+
+    #submit{
+        margin-right: 19.9%;
+    }
+
+    #CurrentTotalPrice{
+        margin-right: 19.9%;
+    }
 }

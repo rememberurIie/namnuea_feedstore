@@ -49,7 +49,7 @@ router.get('/cart/:AccountID', async (req, res) => {
         try {
             const { AccountID } = req.params;
             const cartItems = await query(`
-              SELECT product.Image AS Image, product.ProductID, product.ProductName AS ProductName, cart_items.Quantity AS Quantity, cart_items.Price AS Price
+              SELECT product.Image AS Image, product.ProductID, product.ProductName AS ProductName, cart_items.Quantity AS Quantity, product.Price AS Price
               FROM cart_items 
               JOIN product ON cart_items.ProductID = product.ProductID
               JOIN cart ON cart_items.CartID = cart.CartID
@@ -61,8 +61,11 @@ router.get('/cart/:AccountID', async (req, res) => {
                 AccountID: req.session.AccountID,
                 Title: req.session.Title,
                 AccountName: req.session.AccountName,
-                CartItems: cartItems
+                CartItems: cartItems,
             });
+
+            console.log(cartItems);
+
         } catch (error) {
             console.error('Error fetching cart items:', error);
             res.status(500).send('เกิดข้อผิดพลาดในการดึงข้อมูลตะกร้า');
@@ -88,12 +91,38 @@ router.post('/cart/remove', async (req, res) => {
           WHERE cart.AccountID = ? AND cart_items.ProductID = ? AND cart.Status = 'pending';
         `, [AccountID, ProductID]);
 
-            res.send('รลบสินค้าในตะกร้าสำเร็จ');
+            res.send('ลบสินค้าในตะกร้าสำเร็จ');
         } catch (error) {
             console.error('Error removing item from cart:', error);
             res.status(500).send('เกิดข้อผิดพลาดในการลบสินค้า');
         }
     }
 });
+
+// Update cart item quantity and price
+router.post('/cart/update', async (req, res) => {
+    if (!req.session.loggedIn) {
+        res.redirect('/login');
+    } else {
+        try {
+            const { AccountID, ProductID, Quantity, Price } = req.body;
+    
+            // Update cart item with new quantity and price
+            await query(`
+                UPDATE cart_items
+                SET Quantity = ?, Price = ?
+                WHERE CartID = (SELECT CartID FROM cart WHERE AccountID = ? AND Status = 'pending') 
+                AND ProductID = ?;
+            `, [Quantity, Price, AccountID, ProductID]);
+    
+            res.send('Cart updated successfully'); // Respond with a success message
+    
+        } catch (error) {
+            console.error('Error updating cart item:', error);
+            res.status(500).send('เกิดข้อผิดพลาดในการอัปเดตสินค้า');
+        }
+    }
+});
+
 
 module.exports = router;
