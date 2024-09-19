@@ -9,14 +9,14 @@
 }
 
 #order-card {
- border: 1px solid #dddddd00;
- padding-left: 10%;
+ border: 1px solid #a3a3a300;
+ padding-left: 10% ;
  padding-right: 10%;
  margin-top: 30px;
- 
  justify-content: flex-end;
-
 }
+
+
 
 .order-image {
  width: 100px;
@@ -38,18 +38,48 @@
 
 #payment {
  justify-content: flex-start;
- margin-bottom: 80px;
- padding-right: 10%;
+ margin-bottom: 50px;
+	padding-right: 10%;
 }
 
 #payment img {
- height: 300px; /* ขนาดเริ่มต้นของรูปภาพ */
+ height: 275px; /* ขนาดเริ่มต้นของรูปภาพ */
 }
 
 /* Media query สำหรับหน้าจอที่เล็กกว่า 576px (col-sm) */
-@media (max-width: 575.98px) {
+@media (max-width: 960px) {
  #payment img {
   justify-content: center;
-  margin-top: 50px;
+  margin-top: 60px;
  }
+	#payment{
+		padding-right: 0;
+	}
+}
+
+#upload{
+ border: 1px solid #a3a3a36c;
+	padding: 20px;
+	border-radius: 20px;
+	width: 330px;
+
+}
+
+#payment b{
+	padding-bottom: 10px;
+}
+#payment button{
+	margin-top: 25px;
+}
+
+.button-group {
+	display: flex;
+	justify-content: space-between; /* Space between buttons */
+	width: 100%; /* Ensure the buttons take up full width */
+}
+
+/* Optional: To ensure the buttons have equal width */
+.button-group .btn {
+	flex: 2;
+	margin: 0 10px; /* Add margin between the buttons */
 }
