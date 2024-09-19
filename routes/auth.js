@@ -17,7 +17,7 @@ router.post('/auth', function (req, res) {
             }
 
             if (results.length > 0) {
-                bcrypt.compare(Pwd, results[0].Pwd, function (err, result) {
+                bcrypt.compare(Pwd, results[0].Pwd, async function (err, result) {
                     if (err) {
                         console.error('Password comparison error:', err);
                         res.status(500).send('Password comparison error.');
@@ -30,7 +30,7 @@ router.post('/auth', function (req, res) {
                         req.session.AccountName = results[0].AccountName;
                         req.session.AccountType = results[0].AccountType; // เก็บ UserName ไว้ใน session
                         console.log('Session Account:', req.session.Account);
-
+                        await connection.query('INSERT INTO `log`(`AccountID`) VALUES (?)',req.session.AccountID);
                         // เปลี่ยนเส้นทางตาม AccountType
                         if (results[0].AccountType === 'Admin' || results[0].AccountType === 'Employee') {
                             res.redirect('/order_all?login=success'); // เปลี่ยนเส้นทางไปยังหน้า admin

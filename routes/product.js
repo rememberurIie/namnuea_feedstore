@@ -31,6 +31,7 @@ router.get('/category/:CategoryName', function (req, res, next) {
                     req.session.CategoryName = categoryName;
                     req.session.Subcategories = subcategories;
                     res.render('subCategory', {
+                        AccountID: req.session.AccountID,
                         AccountName: req.session.AccountName,
                         SubcategoryImage: req.session.SubcategoryImage,
                         Title: req.session.Title,
@@ -52,6 +53,7 @@ router.get('/product/:SubCategoryID', function (req, res) {
         } else {
             res.render('product', {
                 Products: products,
+                AccountID: req.session.AccountID,
                 AccountName: req.session.AccountName,
                 SubcategoryImage: req.session.SubcategoryImage,
                 Title: req.session.Title,

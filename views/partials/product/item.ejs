@@ -1,5 +1,5 @@
 <div id="selector" class="row">
-    <% Products.forEach(function(item, index) {%>
+    <% Products.forEach(function(item, index) { %>
         <div id="image" class="col-lg-3">
             <img src="<%= item.Image %>">
             <p>
@@ -7,9 +7,57 @@
             </p>
             <p>ราคา <%= item.Price %> บาท</p>
             <div class="button">
-                <button type="button" class="btn btn-light">Add to Cart</button>
-                <button type="button" class="btn btn-dark">Buy Now</button>
+                <% if (typeof AccountName !== 'undefined') { %>
+                    <button type="button" class="btn btn-light add-to-cart" 
+                            data-product-id="<%= item.ProductID %>" 
+                            data-product-name="<%= item.ProductName %>" 
+                            data-price="<%= item.Price %>">
+                        Add to Cart
+                    </button>
+                    <button type="button" class="btn btn-dark">Buy Now</button>
+                <% } else { %>
+                    <a href="/login"><button type="button" class="btn btn-light">เข้าสู่ระบบ</button></a>
+                <% } %>
             </div>
         </div>
-        <%} ); %>
+    <% }); %>
 </div>
+
+<!-- ส่งค่า AccountID ให้ JavaScript ผ่าน EJS -->
+<script>
+    var AccountID = "<%= AccountID %>";
+    console.log("AccountID from EJS:", AccountID); // ตรวจสอบค่า AccountID
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.add-to-cart').click(function() {
+            // ดึงข้อมูลจาก data attributes ของปุ่มที่ถูกกด
+            var ProductID = $(this).data('product-id');
+            var Quantity = 1; // สามารถเพิ่ม input ให้ผู้ใช้เลือกจำนวนได้
+            var price = $(this).data('price');
+            console.log("Product ID:", ProductID);
+            console.log("Quantity:", Quantity);
+            console.log("AccountID:", AccountID);
+
+            // ส่งข้อมูลไปที่ backend เพื่อเพิ่มสินค้าลงในตะกร้า
+            $.ajax({
+                url: '/cart/add',
+                method: 'POST',
+                data: {
+                    AccountID: AccountID,
+                    ProductID: ProductID, // ตรวจสอบการใช้ชื่อคีย์ให้ตรงกับฝั่งเซิร์ฟเวอร์
+                    Quantity: Quantity
+                },
+                success: function(response) {
+                    alert('เพิ่มสินค้าลงในตะกร้าสำเร็จ');
+                },
+                error: function(error) {
+                    alert('เกิดข้อผิดพลาดในการเพิ่มสินค้า');
+                    console.log("Error:", error); // แสดงข้อมูลข้อผิดพลาด
+                }
+            });
+        });
+    });
+</script>
