@@ -62,18 +62,22 @@ router.post('/cart/add', async (req, res) => {
 router.get('/cart/:AccountID', async (req, res) => {
     try {
         const { AccountID } = req.params;
-        const cartItems = await connection.query(`
-          SELECT product.Image, product.ProductName, cart_items.Quantity, cart_items.Price 
+        connection.query(`
+          SELECT product.Image AS Image, product.ProductName AS ProductName, cart_items.Quantity AS Quantity, cart_items.Price AS Price
           FROM cart_items 
           JOIN product ON cart_items.ProductID = product.ProductID
           JOIN cart ON cart_items.CartID = cart.CartID
           WHERE cart.AccountID = ? AND cart.Status = 'pending'
-        `, [AccountID]);
-
-        // res.json(cartItems);
+        `, [AccountID], (err, cart) => {
+            if (err) {
+                res.send(err);
+            } else {
+                res.render('cart', { AccountID: req.session.AccountID, Title: req.session.Title, AccountName: req.session.AccountName, CartItems: cart });
+            }
+        });
         // console.log(res.json(cartItems));
         // console.log(cartItems);
-        res.redirect('cart', {AccountID: req.session.AccountID, CartItems: cartItems});
+
     } catch (error) {
         console.error('Error fetching cart items:', error);
         res.status(500).send('เกิดข้อผิดพลาดในการดึงข้อมูลตะกร้า');

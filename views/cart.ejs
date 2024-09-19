@@ -3,7 +3,7 @@
 
 <head>
     <title>
-        <%= title %>
+        <%= Title %>
     </title>
     <link rel='stylesheet' href='/stylesheets/cart.css' />
     <link rel='stylesheet' href='/stylesheets/mainpage.css' />
@@ -42,35 +42,20 @@
                 </tr>
             </thead>
             <tbody>
-                <% CartItems.forEach(function(item, index) {%>
-                    <%});%>
-                <tr>
-                    <td><img src="https://via.placeholder.com/50" alt="Product Image"></td>
-                    <td>สินค้าตัวอย่าง 1</td>
-                    <td>฿100</td>
-                    <td>
-                        <button class="btn" onclick="changeQuantity(-1)">-</button>
-                        <span id="qty1">1</span>
-                        <button class="btn" onclick="changeQuantity(1)">+</button>
-                    </td>
-                    <td id="total1">฿100</td>
-                    <td><button class="btn btn-danger" onclick="removeItem(this)">ลบ</button></td>
-                </tr>
-
-                <tr>
-                    <td><img src="https://via.placeholder.com/50" alt="Product Image"></td>
-                    <td>สินค้าตัวอย่าง 2</td>
-                    <td>฿100</td>
-                    <td>
-                        <button class="btn" onclick="changeQuantity(-1)">-</button>
-                        <span id="qty1">1</span>
-                        <button class="btn" onclick="changeQuantity(1)">+</button>
-                    </td>
-                    <td id="total1">฿100</td>
-                    <td><button class="btn btn-danger" onclick="removeItem(this)">ลบ</button></td>
-                </tr>
-
-
+                <% CartItems.forEach(function(item) { %>
+                    <tr>
+                        <td><img src="<%= item.Image %>" alt="<%= item.ProductName %>" height="50" width="50"></td>
+                        <td><%= item.ProductName %></td>
+                        <td>฿100</td>
+                        <td>
+                            <button class="btn" onclick="changeQuantity(-1)">-</button>
+                            <span id="qty1"><%= item.Quantity %></span>
+                            <button class="btn" onclick="changeQuantity(1)">+</button>
+                        </td>
+                        <td id="total1"><%= item.Price %></td>
+                        <td><button class="btn btn-danger" onclick="removeItem(this)">ลบ</button></td>
+                    </tr>
+                    <% }) %>
             </tbody>
 
         </table>
@@ -98,8 +83,8 @@
         var newQty = currentQty + amount;
         if (newQty < 1) newQty = 1;
         qtyElem.textContent = newQty;
-        var price = 100; // ราคา
-        totalElem.textContent = '฿' + (newQty * price);
+        var price = totalElem.nodeValue; // ราคา
+        totalElem.textContent = '฿' + (newQty + price);
     }
 
     function removeItem(button) {
