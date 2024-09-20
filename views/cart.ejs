@@ -50,18 +50,21 @@
                     <td>
                         <%= item.ProductName %>
                     </td>
-                    <td>฿<%= item.Price %>
+                    <td>฿<%= item.Price.toFixed(2) %>
                     </td>
                     <td>
                         <button class="btn"
-                            onclick="changeQuantity(-1, '<%= index %>', '<%= item.Price %>', '<%= item.ProductID %>')">-</button>
+                            onclick="changeQuantity(-1, '<%= index %>', '<%= item.Price.toFixed(2) %>', '<%= item.ProductID %>')">-</button>
                         <span id="qty<%= index %>">
                             <%= item.Quantity %>
                         </span>
                         <button class="btn"
-                            onclick="changeQuantity(1, '<%= index %>', '<%= item.Price %>', '<%= item.ProductID %>')">+</button>
+                            onclick="changeQuantity(1, '<%= index %>', '<%= item.Price.toFixed(2) %>', '<%= item.ProductID %>')">+</button>
                     </td>
-                    <td id="total<%= index %>">฿<%= item.Price * item.Quantity %>
+                    <td id="total<%= index %>">
+                        ฿<%= (item.Price * item.Quantity).toFixed(2) %>
+                    </td>
+                    
                     </td>
                     <td><button class="btn btn-danger"
                             onclick="removeItem(this, '<%= item.ProductID %>')">ลบ</button>
@@ -80,7 +83,7 @@
         <div id="submit">
             <a class="btn btn-secondary" href="/category" style="color: white">ซื้อสินค้าต่อ</a>
             &nbsp;&nbsp;&nbsp;
-            <a class="btn btn-warning" href="/checkout" style="color: rgb(0, 0, 0)">ชำระเงิน</a>
+            <a class="btn btn-warning" href="/checkout/<%=AccountID%>" style="color: rgb(0, 0, 0)">ชำระเงิน</a>
         </div>
 
     </div>

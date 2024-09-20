@@ -64,8 +64,6 @@ router.get('/cart/:AccountID', async (req, res) => {
                 CartItems: cartItems,
             });
 
-            console.log(cartItems);
-
         } catch (error) {
             console.error('Error fetching cart items:', error);
             res.status(500).send('เกิดข้อผิดพลาดในการดึงข้อมูลตะกร้า');

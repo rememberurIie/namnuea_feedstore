@@ -2,19 +2,18 @@
     <% Products.forEach(function(item, index) { %>
         <div id="image" class="col-lg-3">
             <img src="<%= item.Image %>">
-            <p>
+            <p style="margin-left: 30px; margin-right: 30px;">
                 <%= item.ProductName %>
             </p>
             <p>ราคา <%= item.Price %> บาท</p>
             <div class="button">
                 <% if (typeof AccountName !== 'undefined') { %>
-                    <button type="button" class="btn btn-light add-to-cart" 
+                    <button type="button" class="btn btn-dark add-to-cart" 
                             data-product-id="<%= item.ProductID %>" 
                             data-product-name="<%= item.ProductName %>" 
                             data-price="<%= item.Price %>">
                         Add to Cart
                     </button>
-                    <button type="button" class="btn btn-dark">Buy Now</button>
                 <% } else { %>
                     <a href="/login"><button type="button" class="btn btn-light">เข้าสู่ระบบ</button></a>
                 <% } %>

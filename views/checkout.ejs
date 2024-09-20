@@ -3,7 +3,7 @@
 
 	<head>
 		<title>
-			<%= title %>
+			<%= Title %>
 		</title>
 	<link rel='stylesheet' href='/stylesheets/mainpage.css' />
 	<link rel='stylesheet' href='/stylesheets/checkout.css' />
@@ -36,58 +36,27 @@
 			<!-- Order details column -->
 			<div class="col-lg-1"></div>
 			<div id="order-card" class="col-lg-7">
-		
-				<!-- Product details -->
-				<div class="order-details mb-3">
-					<div class="d-flex">
-						<img src="image-url.jpg" alt="Product" class="order-image me-3">
-						<div>
-							<p class="mb-0"><strong>OPHTUS รุ่น Hover 2.0 เลนส์ RetinaX Clear</strong></p>
-							<p class="mb-0">แว่นกรองแสงสำหรับเกมเมอร์</p>
-							<p class="mb-0">Variation: Black</p>
-							<p>x1</p>
-						</div>
+				
+				<% CartItems.forEach(function(item, index) { %>
+					<div class="order-details mb-3">
+						 <div class="d-flex align-items-center">
+							  <img src="<%= item.Image %>" alt="<%= item.ProductName %>" class="order-image me-3">
+							  <div class="product-info">
+									<p class="mb-0"><strong><%= item.ProductName %></strong></p>
+									<p>x<%= item.Quantity %></p>
+							  </div>
+						 </div>
+						 <div class="text-end">
+							  <p>฿<%= item.Price.toFixed(2) %></p>
+						 </div>
 					</div>
-					<div class="text-end">
-						<p>฿2,490</p>
-					</div>
-				</div>
-
-				<div class="order-details mb-3">
-					<div class="d-flex">
-						<img src="image-url.jpg" alt="Product" class="order-image me-3">
-						<div>
-							<p class="mb-0"><strong>OPHTUS รุ่น Hover 2.0 เลนส์ RetinaX Clear</strong></p>
-							<p class="mb-0">แว่นกรองแสงสำหรับเกมเมอร์</p>
-							<p class="mb-0">Variation: Black</p>
-							<p>x1</p>
-						</div>
-					</div>
-					<div class="text-end">
-						<p>฿2,490</p>
-					</div>
-				</div>
-
-				<div class="order-details mb-3">
-					<div class="d-flex">
-						<img src="image-url.jpg" alt="Product" class="order-image me-3">
-						<div>
-							<p class="mb-0"><strong>OPHTUS รุ่น Hover 2.0 เลนส์ RetinaX Clear</strong></p>
-							<p class="mb-0">แว่นกรองแสงสำหรับเกมเมอร์</p>
-							<p class="mb-0">Variation: Black</p>
-							<p>x1</p>
-						</div>
-					</div>
-					<div class="text-end">
-						<p>฿2,490</p>
-					</div>
-				</div>
-		
+			  <% }) %>
+			  
 				<div class="d-flex justify-content-between align-items-center">
 					<div>
 					</div>
-					<div class="text-end">
-						<span>Order Total: <strong class="text-danger">฿1,743</strong></span>
+					<div class="text-end" style="font-size: 21px;">
+						<b><span>Order Total : <strong class="text-danger">฿<%= TotalPrices[0].Price.toFixed(2) %></strong></span></b>
 					</div>
 				</div>
 			</div>

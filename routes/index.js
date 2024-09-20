@@ -30,9 +30,9 @@ router.get('/location', function (req, res, next) {
 // } 
 // });
 
-router.get('/checkout', function (req, res, next) {
-  res.render('checkout', { loggedIn: req.session.loggedIn, AccountID: req.session.AccountID, AccountName: req.session.AccountName, AccountType: req.session.AccountType, title: 'Checkout' });
-});
+// router.get('/checkout', function (req, res, next) {
+//   res.render('checkout', { loggedIn: req.session.loggedIn, AccountID: req.session.AccountID, AccountName: req.session.AccountName, AccountType: req.session.AccountType, title: 'Checkout' });
+// });
 
 //---------------------account----------------------//
 

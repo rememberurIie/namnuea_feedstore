@@ -16,7 +16,9 @@
  justify-content: flex-end;
 }
 
-
+.product-info{
+	margin-left: 15px;
+}
 
 .order-image {
  width: 100px;
