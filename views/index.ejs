@@ -80,19 +80,6 @@
       dots[slideIndex - 1].className += " w3-white";
   }
 
-  // Function to display alerts based on query parameters
-   function displayAlert() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const loginStatus = urlParams.get('login');
-      const registerStatus = urlParams.get('register');
-
-      if (loginStatus === 'success') {
-            alert('Login Success!'); //alert login 
-      } else if (registerStatus === 'success'){
-         alert('Register Success!'); //alert register
-      }
-   }
-
    // Call the function to display the alert when the page loads
    window.onload = displayAlert;
 

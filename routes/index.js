@@ -45,14 +45,14 @@ router.get('/register', function (req, res, next) {
   res.render('account/register', { title: 'Register' });
 });
 
-//see history orders for account is in session
-router.get('/myaccount', function (req, res, next) {
-  if (!req.session.loggedIn) {
-    res.redirect('/login');
-  } else {
-    res.render('account/myaccount', { loggedIn: req.session.loggedIn, AccountID: req.session.AccountID, AccountName: req.session.AccountName, AccountType: req.session.AccountType, title: 'MyAccount' });
-  }
-});
+// //see history orders for account is in session
+// router.get('/myaccount', function (req, res, next) {
+//   if (!req.session.loggedIn) {
+//     res.redirect('/login');
+//   } else {
+//     res.render('account/myaccount', { loggedIn: req.session.loggedIn, AccountID: req.session.AccountID, AccountName: req.session.AccountName, AccountType: req.session.AccountType, title: 'MyAccount' });
+//   }
+// });
 
 //---------------------admin----------------------//
 

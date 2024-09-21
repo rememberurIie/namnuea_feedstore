@@ -30,6 +30,10 @@
  }
 }
 
+.product-info{
+	margin-left: 15px;
+}
+
 .order-image {
  width: 100px;
  height: auto;
@@ -46,4 +50,12 @@
  background-color: #FF5722;
  color: white;
  border: none;
+}
+
+#order-header{
+ padding-bottom: 10px;
+}
+
+#order-footer{
+ padding-top: 10px;
 }
