@@ -79,11 +79,10 @@
                 <b>ราคาทั้งหมด : <span id="totalPrice"><%= totalPrice %></span> บาท</b>
             </div>
             
-
         <div id="submit">
             <a class="btn btn-secondary" href="/category" style="color: white">ซื้อสินค้าต่อ</a>
             &nbsp;&nbsp;&nbsp;
-            <a class="btn btn-warning" href="/checkout/<%=AccountID%>" style="color: rgb(0, 0, 0)">ชำระเงิน</a>
+            <% if (CartItems.length > 0){%><a class="btn btn-warning" href="/checkout/<%=AccountID%>" style="color: rgb(0, 0, 0)">ชำระเงิน</a><%}%>
         </div>
 
     </div>
@@ -121,7 +120,7 @@
                     AccountID: AccountID,
                     ProductID: productID,  // Make sure you're passing the correct productID
                     Quantity: newQuantity,
-                    Price: newTotal.toFixed(2)
+                    Price: newTotal.toFixed(2),
                 },
                 success: function (response) {
                     console.log(response); // Handle the success response, if needed

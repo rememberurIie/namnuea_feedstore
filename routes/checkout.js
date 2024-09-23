@@ -73,7 +73,6 @@ router.post('/checkout/processing', async (req, res) => {
    if (!req.session.loggedIn) {
        return res.redirect('/login');
    }
-
    try {
        const { AccountID, CustomerReceipt,} = req.body;
 
@@ -95,12 +94,18 @@ router.post('/checkout/processing', async (req, res) => {
          WHERE cart.AccountID = ? AND cart.Status = 'pending'
          `, [AccountID]);
 
-       // Insert into OrderDetails
+       // Insert into OrderDetails and cut stock
        for (const item of cartItems) {
          await query(`
              INSERT INTO OrderDetails (OrderID, ProductID, Quantity)
              VALUES (?, ?, ?);
          `, [orderID, item.ProductID, item.Quantity]);
+         
+         await query(`
+            UPDATE product set Stock = Stock - ? 
+            WHERE ProductID = ?;
+        `, [item.Quantity, item.ProductID,]);
+
      };
 
         // update statud cart

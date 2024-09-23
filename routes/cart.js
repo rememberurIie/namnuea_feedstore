@@ -43,30 +43,36 @@ router.post('/cart/add', async (req, res) => {
 
 // แสดงรายการในตะกร้า
 router.get('/cart/:AccountID', async (req, res) => {
+    const { AccountID } = req.params;
+    console.log('AccountID',AccountID);
+    console.log('AccountID form session',req.session.AccountID);
     if (!req.session.loggedIn) {
         res.redirect('/login');
     } else {
-        try {
-            const { AccountID } = req.params;
-            const cartItems = await query(`
-              SELECT product.Image AS Image, product.ProductID, product.ProductName AS ProductName, cart_items.Quantity AS Quantity, product.Price AS Price
-              FROM cart_items 
-              JOIN product ON cart_items.ProductID = product.ProductID
-              JOIN cart ON cart_items.CartID = cart.CartID
-              WHERE cart.AccountID = ? AND cart.Status = 'pending'
-            `, [AccountID]);
-
-            res.render('cart', {
-                loggedIn: req.session.loggedIn,
-                AccountID: req.session.AccountID,
-                Title: req.session.Title,
-                AccountName: req.session.AccountName,
-                CartItems: cartItems,
-            });
-
-        } catch (error) {
-            console.error('Error fetching cart items:', error);
-            res.status(500).send('เกิดข้อผิดพลาดในการดึงข้อมูลตะกร้า');
+        if (AccountID != req.session.AccountID) {
+            res.redirect('/cart/' + req.session.AccountID);
+        } else {
+            try {
+                const cartItems = await query(`
+                  SELECT product.Image AS Image, product.ProductID, product.ProductName AS ProductName, cart_items.Quantity AS Quantity, product.Price AS Price
+                  FROM cart_items 
+                  JOIN product ON cart_items.ProductID = product.ProductID
+                  JOIN cart ON cart_items.CartID = cart.CartID
+                  WHERE cart.AccountID = ? AND cart.Status = 'pending'
+                `, [AccountID]);
+    
+                res.render('cart', {
+                    loggedIn: req.session.loggedIn,
+                    AccountID: req.session.AccountID,
+                    Title: req.session.Title,
+                    AccountName: req.session.AccountName,
+                    CartItems: cartItems,
+                });
+    
+            } catch (error) {
+                console.error('Error fetching cart items:', error);
+                res.status(500).send('เกิดข้อผิดพลาดในการดึงข้อมูลตะกร้า');
+            }
         }
     }
 
