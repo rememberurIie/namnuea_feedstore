@@ -67,14 +67,14 @@ th {
 
 @media (min-width: 1200px) {
     table {
-        width: 60%;
+        width: 70%;
     }
 
     #submit{
-        margin-right: 19.9%;
+        margin-right: 14.9%;
     }
 
     #CurrentTotalPrice{
-        margin-right: 19.9%;
+        margin-right: 14.9%;
     }
 }
