@@ -1,42 +1,114 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-	<link rel='stylesheet' href='/stylesheets/admin.css'/>
+	<title>
+		<%=title%>
+	</title>
+	<link rel='stylesheet' href='/stylesheets/cart.css' />
+	<link rel='stylesheet' href='/stylesheets/admin.css' />
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
+
 <body>
 
 	<%- include('partials/topbar') %>
 
-	<div class="sidebar">
-		<a href="/overall">สรุปผล</a>
-		<a class="active" href="/order_all">คำสั่งซื้อทั้งหมด</a>
-		<a href="/order_manage">จัดการสินค้า</a>
-		<a href="#about"></a>
-	</div>
+		<%- include('partials/sidebar') %>
 
-	<div class="content">
-		<h2>Coming Soon</h2>
-		
-	</div>
+			<div class="content">
+				<table>
+					<thead>
+						<tr>
+							<th><button class="<%= (Status == 'Payment Checking') ? 'btn-dark' : 'btn-light' %>" id="Payment Checking"
+									onclick="orderByStatus(id)">ตรวจสลิป</button></th>
+							<th><button class="<%= (Status == 'Payment Complete, Wait for Shipping') ? 'btn-dark' : 'btn-light' %>" id="Payment Complete, Wait for Shipping"
+									onclick="orderByStatus(id)">รอส่ง</button></th>
+							<th><button class="<%= (Status == 'Shipping') ? 'btn-dark' : 'btn-light' %>" id="Shipping" onclick="orderByStatus(id)">กำลังส่ง</button>
+							</th>
+							<th><button class="<%= (Status == 'Shipped') ? 'btn-dark' : 'btn-light' %>" id="Shipped" onclick="orderByStatus(id)">ส่งเสร็จ</button>
+							</th>
+							<th><button class="<%= (Status == 'all') ? 'btn-dark' : 'btn-light' %>" id="all" onclick="orderByStatus(id)">ทั้งหมด</button></th>
+						</tr>
+					</thead>
+				</table>
+				<table>
+					<thead>
+						<tr>
+							<th>OrderID</th>
+							<th>AccountID</th>
+							<th>OrderDate</th>
+							<th>ShipperID</th>
+							<th>OrderStatus</th>
+							<th>จัดการ</th>
+						</tr>
+					</thead>
+					<tbody>
+						<% Orders.forEach(function(item, index) { %>
+							<tr>
+								<td>
+									<%= item.OrderID %>
+								</td>
+								<td>
+									<%= item.AccountID %>
+								</td>
+								<td>
+									<%= new Date(item.OrderDate).toLocaleString('th-TH', { day: 'numeric' ,
+										month: 'long' , year: 'numeric' , hour: 'numeric' , minute: 'numeric' }) %>
+								</td>
+
+								<td>
+									<%= (item.ShipperID===null) ? '-' :'item.ShipperID' %>
+								</td>
+								<td>
+									<%= item.OrderStatus %>
+								</td>
+								<td><button class="btn btn-warning">ดู</button>
+								</td>
+							</tr>
+							<% }) %>
+					</tbody>
+				</table>
+			</div>
 
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+
+	function orderByStatus(status) {
+		$.ajax({
+			url: '/order_all/status?status=' + encodeURIComponent(status),  // ส่ง status ผ่าน query string
+			method: 'GET',  // ใช้ GET method
+			success: function (response) {
+				// แทนที่จะ console.log() ให้เปลี่ยนหน้าไปยังเส้นทางที่ต้องการ
+				window.location.href = '/order_all/status?status=' + encodeURIComponent(status);
+			},
+			error: function (error) {
+				alert('เกิดข้อผิดพลาดในการ order by status');
+				console.log("Error:", error); // Log the error for debugging
+			}
+		});
+	}
+
+
+
+
 	// Function to display alerts based on query parameters
 	function displayAlert() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const loginStatus = urlParams.get('login');
+		const urlParams = new URLSearchParams(window.location.search);
+		const loginStatus = urlParams.get('login');
 
-            if (loginStatus === 'success') {
-                alert('Login Success as Admin!');
-            }
-        }
+		if (loginStatus === 'success') {
+			alert('Login Success as Admin!');
+		}
+	}
 
-        // Call the function to display the alert when the page loads
-        window.onload = displayAlert;
+	// Call the function to display the alert when the page loads
+	window.onload = displayAlert;
 </script>
+
 </html>

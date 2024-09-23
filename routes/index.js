@@ -57,29 +57,29 @@ router.get('/register', function (req, res, next) {
 //---------------------admin----------------------//
 
 //login
-router.get('/overall', function (req, res, next) {
-  if (!req.session.loggedIn && req.session.AccountType != 'Admin') {
-    res.redirect('/');
-  } else {
-    res.render('admin/overall', { loggedIn: req.session.loggedIn, AccountID: req.session.AccountID, AccountName: req.session.AccountName, AccountType: req.session.AccountType, title: 'Location' });
-  }
-});
+// router.get('/overall', function (req, res, next) {
+//   if (!req.session.loggedIn && req.session.AccountType != 'Admin') {
+//     res.redirect('/');
+//   } else {
+//     res.render('admin/overall', { loggedIn: req.session.loggedIn, AccountID: req.session.AccountID, AccountName: req.session.AccountName, AccountType: req.session.AccountType, title: 'Location' });
+//   }
+// });
 
 //login
-router.get('/order_all', function (req, res, next) {
-  if (!req.session.loggedIn && req.session.AccountType != 'Admin') {
-    res.redirect('/');
-  } else {
-    res.render('admin/order_all', { loggedIn: req.session.loggedIn, AccountID: req.session.AccountID, AccountName: req.session.AccountName, AccountType: req.session.AccountType, title: 'Location' });
-  }
-});
+// router.get('/order_all', function (req, res, next) {
+//   if (!req.session.loggedIn && req.session.AccountType != 'Admin') {
+//     res.redirect('/');
+//   } else {
+//     res.render('admin/order_all', { loggedIn: req.session.loggedIn, AccountID: req.session.AccountID, AccountName: req.session.AccountName, AccountType: req.session.AccountType, title: 'Location' });
+//   }
+// });
 
-router.get('/order_manage', function (req, res, next) {
-  if (!req.session.loggedIn && req.session.AccountType != 'Admin') {
-    res.redirect('/');
-  } else {
-    res.render('admin/order_manage', { loggedIn: req.session.loggedIn, AccountID: req.session.AccountID, AccountName: req.session.AccountName, AccountType: req.session.AccountType, title: 'Location' });
-  }
-});
+// router.get('/order_manage', function (req, res, next) {
+//   if (!req.session.loggedIn && req.session.AccountType != 'Admin') {
+//     res.redirect('/');
+//   } else {
+//     res.render('admin/order_manage', { loggedIn: req.session.loggedIn, AccountID: req.session.AccountID, AccountName: req.session.AccountName, AccountType: req.session.AccountType, title: 'Location' });
+//   }
+// });
 
 module.exports = router;
