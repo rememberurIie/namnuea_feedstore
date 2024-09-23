@@ -8,9 +8,9 @@ router.get('/', function (req, res) {
   res.render('index', { loggedIn: req.session.loggedIn, AccountID: req.session.AccountID, AccountName: req.session.AccountName, AccountType: req.session.AccountType, title: 'Express' });
 });
 
-router.get('/category', function (req, res, next) {
-  res.render('category', { loggedIn: req.session.loggedIn, AccountID: req.session.AccountID, AccountName: req.session.AccountName, AccountType: req.session.AccountType, title: 'Category' });
-});
+// router.get('/category', function (req, res, next) {
+//   res.render('category', { loggedIn: req.session.loggedIn, AccountID: req.session.AccountID, AccountName: req.session.AccountName, AccountType: req.session.AccountType, title: 'Category' });
+// });
 
 router.get('/promotion', function (req, res, next) {
   res.render('promotion', { loggedIn: req.session.loggedIn, AccountID: req.session.AccountID, AccountName: req.session.AccountName, AccountType: req.session.AccountType, title: 'Promotion' });

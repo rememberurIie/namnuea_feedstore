@@ -2,118 +2,58 @@
 <html>
 
 <head>
-  <title>
-    <%= title %>
-  </title>
-  <link rel='stylesheet' href='/stylesheets/mainpage.css' />
-  <link rel='stylesheet' href='/stylesheets/category.css' />
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>
+        <%= title %>
+    </title>
+    <link rel='stylesheet' href='/stylesheets/mainpage.css' />
+    <link rel='stylesheet' href='/stylesheets/category.css' />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
 <body>
-  <div id="main">
-    <div class="container">
+    <div id="main">
+        <div class="container">
 
-      <%- include('partials/login-header') %>
+            <%- include('partials/login-header') %>
 
-        <%- include('partials/header') %>
+                <%- include('partials/header') %>
 
-          <div id="content" style="padding-bottom: 50px">
+                    <div id="content" style="padding-bottom: 50px">
 
-            <div id="path" class="row">
-              <div class="col-md-12" style="display: flex; justify-content: center;">
-                <p><a style="color: green " href="/">หน้าแรก</a></p>&nbsp;/&nbsp;
-                <p><a style="color: green " href="/category" font-weight: bold;>หมวดหมู่</a></p>
-              </div>
-            </div>
+                        <div id="path" class="row">
+                            <div class="col-md-12" style="display: flex; justify-content: center;">
+                                <p><a style="color: green " href="/">หน้าแรก</a></p>&nbsp;/&nbsp;
+                                <p><a style="color: green " href="/category" font-weight: bold;>หมวดหมู่</a></p>
+                            </div>
+                        </div>
 
-            <div id="topic">
-              <p id="topic-name">หมวดหมู่สินค้า</p>
-              <p id="topic-description">เลือกซื้อสินค้าอาหารสัตว์ ตามหมวดหมู่สินค้าที่ร้าน น้ำเหนือ หรือ ช็อปออนไลน์
-              </p>
-            </div>
+                        <div id="topic">
+                            <p id="topic-name">หมวดหมู่สินค้า</p>
+                            <p id="topic-description">เลือกซื้อสินค้าอาหารสัตว์ ตามหมวดหมู่สินค้าที่ร้าน น้ำเหนือ หรือ
+                                ช็อปออนไลน์
+                            </p>
+                        </div>
+                                <div id="selector" class="row">
+                                    <% Categories.forEach(function(item, index) { %>
+                                        <div id="image" class="col-lg-2">
+                                            <a href="/category/<%=item.CategoryName%>">
+                                                <img
+                                                    src="<%=item.Image%>">
+                                                <p><%=item.Description%></p>
+                                            </a>
+                                        </div>
+                                        <% }); %>
+                                </div>
+                    </div>
+        </div>
 
-            <div id="selector" class="row">
-              <div class="col-lg-1"></div>
-              <div id="image" class="col-lg-2">
-                <a href="/category/dog" >
-                  <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwyXeKDN29AmZgZPLS7n0Bepe8QmVappBwZCeA3XWEbWNdiDFB">
-                  <p>สุนัข</p>
-                </a>
-              </div>
-              <div id="image" class="col-lg-2">
-                <a href="/category/cat">
-                  <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRF1IwK6-SxM83UpFVY6WtUZxXx-phss_gAUfdKbkTfau6VWVkt">
-                  <p>แมว</p>
-                </a>
-              </div>
-              <div id="image" class="col-lg-2">
-                <a href="/category/fish">
-                  <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnonQ1v_EHGq6LHk3dVwFoA9ia-nU-0L3usw&s">
-                  <p>ปลา</p>
-                </a>
-              </div>
-              <div id="image" class="col-lg-2">
-                <a href="/category/chicken">
-                  <img
-                    src="https://scontent.fbkk29-8.fna.fbcdn.net/v/t39.30808-6/404667119_3429879267322461_2485696535146464743_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeEMzZdRCW9p35RkWHcF07dtsIP3HrcoL5Cwg_cetygvkNuEbeUwM6EUnM12j0YdhmiZ9yH8iE5EG8ABGW0iOSG1&_nc_ohc=YSNzsED5cUcQ7kNvgEHkciD&_nc_ht=scontent.fbkk29-8.fna&oh=00_AYCkZrSLZYMMlTYtnJ9T4bBUbF0YorkEZLZmhnx8OdzH5g&oe=66F22056">
-                  <p>ไก่</p>
-                </a>
-              </div>
-              <div id="image" class="col-lg-2">
-                <a href="/category/pig">
-                  <img
-                    src="https://scontent.fbkk22-3.fna.fbcdn.net/v/t1.6435-9/48396125_2210568085891620_9218258530396536832_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=53a332&_nc_eui2=AeHF1mPeguqkDO1E8ifmCv7bNBKkJUhU3D80EqQlSFTcP13mjk752-ocAAzICKaV7kdVhxRBEwG_-m5UdADpXO0-&_nc_ohc=XswzateIBPQQ7kNvgEB87AV&_nc_ht=scontent.fbkk22-3.fna&oh=00_AYBociz0SKIBwRXy8va78FaI_RoH5lkbd3MY8RLq2SHzaw&oe=6704E44C">
-                  <p>หมู</p>
-                </a>
-              </div>
-              <div class="col-lg-1"></div>
-            </div>
-            <div id="selector" class="row">
-              <div class="col-lg-1"></div>
-              <div id="image" class="col-lg-2">
-                <a href="/category/cow">
-                  <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRk1dMPJbEmg9jJRRqozKC6dfbKfyqUgI8xjA&s">
-                  <p>วัว </p>
-                </a>
-              </div>
-              <div id="image" class="col-lg-2">
-                <a href="/category/bird">
-                  <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBRZdBVz9Uec0hG9_JCV1zCG9KPQybiaX3RA&s">
-                  <p>นก</p>
-                </a>
-              </div>
-              <div id="image" class="col-lg-2">
-                <a href="/category/medicine">
-                  <img
-                    src="https://www.nganwad.com/wp-content/uploads/2018/10/%E0%B8%A2%E0%B8%B2%E0%B8%94%E0%B8%AD%E0%B8%87-3.jpg">
-                  <p>อาหารเสริม / ยา</p>
-                </a>
-              </div>
-              <div id="image" class="col-lg-2">
-                <a href="/category/accessory">
-                  <img src="https://img.lazcdn.com/g/p/9eba55bdf3f4761221258c032d5de828.jpg_960x960q80.jpg_.webp">
-                  <p>ของใช้สัตว์เลี้ยง</p>
-                </a>
-              </div>
+        <%- include('partials/footer') %>
 
-              <div class="col-lg-3"></div>
-            </div>
-          </div>
+
     </div>
-
-    <%- include('partials/footer') %>
-
-
-  </div>
 </body>
 
 </html>
