@@ -21,26 +21,33 @@
 		<%- include('partials/sidebar') %>
 
 			<div class="content">
+				<br>
 				<table>
 					<thead>
 						<tr>
-							<th><button class="<%= (Status == 'Payment Checking') ? 'btn-dark' : 'btn-light' %>" id="Payment Checking"
-									onclick="orderByStatus(id)">ตรวจสลิป</button></th>
-							<th><button class="<%= (Status == 'Payment Complete, Wait for Shipping') ? 'btn-dark' : 'btn-light' %>" id="Payment Complete, Wait for Shipping"
-									onclick="orderByStatus(id)">รอส่ง</button></th>
-							<th><button class="<%= (Status == 'Shipping') ? 'btn-dark' : 'btn-light' %>" id="Shipping" onclick="orderByStatus(id)">กำลังส่ง</button>
+							<th><button class="<%= (Status == 'Payment Checking') ? 'btn-dark' : 'btn-light' %>"
+									id="Payment Checking" onclick="orderByStatus(id)">ตรวจสลิป</button></th>
+							<th><button
+									class="<%= (Status == 'Payment Complete, Wait for Shipping') ? 'btn-dark' : 'btn-light' %>"
+									id="Payment Complete, Wait for Shipping" onclick="orderByStatus(id)">รอส่ง</button>
 							</th>
-							<th><button class="<%= (Status == 'Shipped') ? 'btn-dark' : 'btn-light' %>" id="Shipped" onclick="orderByStatus(id)">ส่งเสร็จ</button>
+							<th><button class="<%= (Status == 'Shipping') ? 'btn-dark' : 'btn-light' %>" id="Shipping"
+									onclick="orderByStatus(id)">กำลังส่ง</button>
 							</th>
-							<th><button class="<%= (Status == 'all') ? 'btn-dark' : 'btn-light' %>" id="all" onclick="orderByStatus(id)">ทั้งหมด</button></th>
+							<th><button class="<%= (Status == 'Shipped') ? 'btn-dark' : 'btn-light' %>" id="Shipped"
+									onclick="orderByStatus(id)">ส่งเสร็จ</button>
+							</th>
+							<th><button class="<%= (Status == 'all') ? 'btn-dark' : 'btn-light' %>" id="all"
+									onclick="orderByStatus(id)">ทั้งหมด</button></th>
 						</tr>
 					</thead>
 				</table>
 				<table>
 					<thead>
 						<tr>
+							<th>No.</th>
 							<th>OrderID</th>
-							<th>AccountID</th>
+							<th>Customer</th>
 							<th>OrderDate</th>
 							<th>ShipperID</th>
 							<th>OrderStatus</th>
@@ -51,10 +58,13 @@
 						<% Orders.forEach(function(item, index) { %>
 							<tr>
 								<td>
+									<%= index+1 %>
+								</td>
+								<td>
 									<%= item.OrderID %>
 								</td>
 								<td>
-									<%= item.AccountID %>
+									<%= item.AccountName %>
 								</td>
 								<td>
 									<%= new Date(item.OrderDate).toLocaleString('th-TH', { day: 'numeric' ,
@@ -67,7 +77,8 @@
 								<td>
 									<%= item.OrderStatus %>
 								</td>
-								<td><button class="btn btn-warning">ดู</button>
+								<td><button class="btn btn-warning"
+										onclick="viewOrderDetail('<%=item.OrderID%>')">ดู</button>
 								</td>
 							</tr>
 							<% }) %>
@@ -95,7 +106,29 @@
 	}
 
 
+	function viewOrderDetail(orderID) {
+		$.ajax({
+			url: '/order_all/getOrderByOrderID',
+			method: 'GET',
+			data: {
+				OrderID: orderID
+			},
+			success: function (response) {
 
+				// แปลงข้อมูลเป็น JSON และ encode เพื่อส่งใน query string
+				const orderData = encodeURIComponent(JSON.stringify(response.Order[0]));
+				const orderDetailsData = encodeURIComponent(JSON.stringify(response.OrderDetails));
+
+
+				// เปลี่ยนหน้าโดยส่งข้อมูลผ่าน query string ที่ถูก encode แล้ว
+				window.location.href = `/order_all/orderByOrderID?Order=${orderData}&OrderDetails=${orderDetailsData}`;
+			},
+			error: function (error) {
+				alert('เกิดข้อผิดพลาดในการดึงข้อมูล getOrderByOrderID');
+				console.log("Error:", error); // Log ข้อผิดพลาดเพื่อการ debug
+			}
+		});
+	}
 
 	// Function to display alerts based on query parameters
 	function displayAlert() {

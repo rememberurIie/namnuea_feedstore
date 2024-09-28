@@ -14,8 +14,8 @@ router.get('/checkout/:AccountID', async (req, res) => {
       res.redirect('/login');
    } else {
       try {
-            const { AccountID } = req.params;
-            const cartItems = await query(`
+         const { AccountID } = req.params;
+         const cartItems = await query(`
             SELECT product.Image AS Image, product.ProductID, product.ProductName AS ProductName, cart_items.Quantity AS Quantity, product.Price AS Price
             FROM cart_items 
             JOIN product ON cart_items.ProductID = product.ProductID
@@ -23,26 +23,26 @@ router.get('/checkout/:AccountID', async (req, res) => {
             WHERE cart.AccountID = ? AND cart.Status = 'pending'
             `, [AccountID]);
 
-            const totalPrices = await query(`
+         const totalPrices = await query(`
                SELECT SUM(cart_items.Price) AS Price
                FROM cart_items 
                WHERE CartID = (SELECT CartID FROM cart WHERE AccountID = ? AND Status = 'pending');
             `, [AccountID]);
-            
-            //render to checkout
-            res.render('checkout', {
-               loggedIn: req.session.loggedIn,
-               AccountID: req.session.AccountID,
-               Title: req.session.Title,
-               AccountName: req.session.AccountName,
-               CartItems: cartItems,
-               TotalPrices: totalPrices
-            })
+
+         //render to checkout
+         res.render('checkout', {
+            loggedIn: req.session.loggedIn,
+            AccountID: req.session.AccountID,
+            Title: req.session.Title,
+            AccountName: req.session.AccountName,
+            CartItems: cartItems,
+            TotalPrices: totalPrices
+         })
             ;
 
       } catch (error) {
-            console.error('Error fetching cart items:', error);
-            res.status(500).send('เกิดข้อผิดพลาดในการดึงข้อมูลตะกร้า');
+         console.error('Error fetching cart items:', error);
+         res.status(500).send('เกิดข้อผิดพลาดในการดึงข้อมูลตะกร้า');
       }
    }
 });
@@ -71,58 +71,65 @@ router.post('/upload/receipt', upload.single('filename'), (req, res) => {
 //ordermaking
 router.post('/checkout/processing', async (req, res) => {
    if (!req.session.loggedIn) {
-       return res.redirect('/login');
+      return res.redirect('/login');
    }
    try {
-       const { AccountID, CustomerReceipt,} = req.body;
+      const { AccountID, CustomerReceipt } = req.body;
 
-       //make orders
-       const orderQuery = await query(`
+      // Make orders
+      const orderQuery = await query(`
            INSERT INTO orders (AccountID, CustomerReceipt, OrderStatus) 
            VALUES (?, ?, "Payment Checking");
        `, [AccountID, CustomerReceipt]);
 
-      //orderID
-       const orderID = orderQuery.insertId;
+      // Get orderID
+      const orderID = orderQuery.insertId;
 
-      //query product to add to ordersDetails
-       const cartItems = await query(`
-         SELECT product.ProductID, cart_items.Quantity AS Quantity
+      // Query products to add to OrderDetails
+      const cartItems = await query(`
+         SELECT product.ProductID, cart_items.Quantity, product.Price
          FROM cart_items 
          JOIN product ON cart_items.ProductID = product.ProductID
          JOIN cart ON cart_items.CartID = cart.CartID
          WHERE cart.AccountID = ? AND cart.Status = 'pending'
          `, [AccountID]);
 
-       // Insert into OrderDetails and cut stock
-       for (const item of cartItems) {
+      var totalPrice = 0;
+      console.log('total price',totalPrice)
+      // Insert into OrderDetails and update stock
+      for (const item of cartItems) {
          await query(`
-             INSERT INTO OrderDetails (OrderID, ProductID, Quantity)
-             VALUES (?, ?, ?);
-         `, [orderID, item.ProductID, item.Quantity]);
-         
+             INSERT INTO OrderDetails (OrderID, ProductID, Quantity, Price)
+             VALUES (?, ?, ?, ?);
+         `, [orderID, item.ProductID, item.Quantity, item.Price]);
+
          await query(`
-            UPDATE product set Stock = Stock - ? 
+            UPDATE product SET Stock = Stock - ? 
             WHERE ProductID = ?;
-        `, [item.Quantity, item.ProductID,]);
+        `, [item.Quantity, item.ProductID]);
 
-     };
+         totalPrice += item.Price * item.Quantity;  // Calculate total based on quantity and price
+      }
 
-        // update statud cart
-        const CartUpdate = await query(`
+      // Update total price in orders table
+      console.log('final total price',totalPrice)
+      await query(`UPDATE orders SET totalPrice = ? WHERE OrderID = ?`, [totalPrice, orderID]);
+
+      // Update cart status to confirmed
+      await query(`
          UPDATE cart
          SET Status ='confirmed'
          WHERE CartID = (SELECT CartID FROM cart WHERE AccountID = ? AND Status = 'pending');
      `, [AccountID]);
 
-
-       res.send('Orders Completed'); // Respond with a success message
+      res.send('Orders Completed'); // Respond with a success message
 
    } catch (error) {
-       console.error('Error processing order:', error);
-       res.status(500).send('เกิดข้อผิดพลาดในการสั่งซื้อ');
+      console.error('Error processing order:', error);
+      res.status(500).send('เกิดข้อผิดพลาดในการสั่งซื้อ');
    }
 });
+
 
 
 
