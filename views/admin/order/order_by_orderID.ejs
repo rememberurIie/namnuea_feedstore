@@ -3,10 +3,7 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <%= title %>
-    </title>
-    <link rel='stylesheet' href='/stylesheets/cart.css' />
+    <title><%= title %></title>
     <link rel="stylesheet" href="/stylesheets/admin.css" />
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
@@ -17,110 +14,157 @@
 <body>
 
     <%- include('../partials/topbar') %>
-        <%- include('../partials/sidebar') %>
+    <%- include('../partials/sidebar') %>
 
-            <div class="content">
-                <h2>Order by Order ID</h2>
-                <div>
-                    <% if (Order && Order.length> 0) { %>
-                        <% Order.forEach(function(itemOrder) { %>
-                            <p>
-                                <strong>Order ID:</strong>
-                                <%= itemOrder.OrderID %><br>
-                                    <strong>Customer Name:</strong>
-                                    <%= itemOrder.AccountName %><br>
-                                        <strong>Order Date:</strong>
-                                        <%= new Date(itemOrder.OrderDate).toLocaleString('th-TH', { day: 'numeric' ,
-                                            month: 'long' , year: 'numeric' , hour: 'numeric' , minute: 'numeric' }) %>
-                                            <br>
-                                            <strong>Status:</strong>
-                                            <%= itemOrder.OrderStatus %><br>
-                                                <select name="OrderStatus" id="OrderStatus">
-                                                    <option value="Payment Checking">Payment Checking</option>
-                                                    <option value="Payment Complete, Wait for Shipping">Payment
-                                                        Complete, Wait for Shipping</option>
-                                                    <option value="Shipping">Shipping</option>
-                                                    <option value="Shipped">Shipped</option>
-                                                </select>
-                            </p>
-                            <div class="column">
-                                <% if (OrderDetails && OrderDetails.length> 0) { %>
-                                    <% let totalQuantity=0; %>
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <th>ลำดับ</th>
-                                                    <th></th>
-                                                    <th>รายการ</th>
-                                                    <th>จำนวน</th>
-                                                    <th>ราคา</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <% OrderDetails.forEach(function(item) { %>
-                                                    <% item.forEach(function(orderDetail, index) { %>
-                                                        <% totalQuantity +=orderDetail.Quantity; %>
-                                                            <tr>
-                                                                <td>
-                                                                    <%=index+1%>
-                                                                </td>
-                                                                <td><img src="<%= orderDetail.Image %>" height="80"
-                                                                        width="80"></td>
-                                                                <td>
-                                                                    <%= orderDetail.ProductName %>
-                                                                </td>
-                                                                <td>
-                                                                    <%= orderDetail.Quantity %> ชิ้น
-                                                                </td>
-                                                                <td>
-                                                                    <%= orderDetail.Price %> บาท
-                                                                </td>
-                                                            </tr>
-                                                            <% }) %>
-                                                                <% }) %>
-                                                                    <tr>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td>รวม</td>
-                                                                        <td>
-                                                                            <%= totalQuantity %> ชิ้น
-                                                                        </td>
-                                                                        <td>
-                                                                            <%= itemOrder.totalPrice %> บาท
-                                                                        </td>
-                                                                    </tr>
-                                            </tbody>
-                                        </table>
-                                        <% } else { %>
-                                            <p>ไม่มีคำสั่งซื้อ T-T</p>
-                                            <% } %>
+    <div class="content" style="padding: 40px;">
+        <h2 class="mb-4" style="padding-top: -10px;">OrderDetails</h2>
+
+        <div class="order-details">
+            <% if (Order && Order.length > 0) { %>
+                <% Order.forEach(function(itemOrder) { %>
+                    <div class="order-summary mb-3 p-4 border rounded shadow-sm">
+                        <strong>Order ID:</strong> <%= itemOrder.OrderID %></p>
+                        <p><strong>Customer Name:</strong> <%= itemOrder.AccountName %></p>
+                        <p><strong>Order Date:</strong> <%= new Date(itemOrder.OrderDate).toLocaleString('th-TH', { 
+                            day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric' }) %>
+                        </p>
+                        <p><strong>Status:</strong> <%= itemOrder.OrderStatus %></p>
+                        <strong>Shippers:</strong> <%= itemOrder.ShipperName %>
+                    </div>
+
+                    <div class="order-summary mb-5 p-4 border rounded shadow-sm">
+                        <p><strong>Change Shipping Status</strong></p>
+                        <form id="orderstatus" class="form-inline" method="POST">
+                            <input type="hidden" name="OrderID" value="<%= itemOrder.OrderID %>">
+                            <div class="form-group mr-3">
+                                <select name="OrderStatus" id="OrderStatus" class="form-control">
+                                    <option value="Payment Checking">Payment Checking</option>
+                                    <option value="Payment Complete, Wait for Shipping">Payment Complete, Wait for Shipping</option>
+                                    <option value="Shipping">Shipping</option>
+                                    <option value="Shipped">Shipped</option>
+                                </select>
                             </div>
-                            <br>
-                            <div>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>CustomerReceipt</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <img src="/<%=itemOrder.CustomerReceipt%>" alt="Receipt Image"
-                                                    height="500" width="500">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                        <br>
+                        <p><strong>Change Shippers</strong></p>
+                        <form id="shippers" class="form-inline" method="POST">
+                            <input type="hidden" name="OrderID" value="<%= itemOrder.OrderID %>">
+                            <div class="form-group mr-3">
+                                <select name="OrderShippers" id="OrderShippers" class="form-control">
+                                    <option value="1">Shipper One</option>
+                                    <option value="2">Shipper Two</option>
+                                </select>
                             </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
 
-                            <% }) %>
-                                <% } else { %>
-                                    <p>ไม่มีคำสั่งซื้อ T-T</p>
-                                    <% } %>
-                </div>
-            </div>
+                    <div class="column">
+                        <% if (OrderDetails && OrderDetails.length > 0) { %>
+                            <% let totalQuantity = 0; %>
+                            <table class="table table-bordered table-hover">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>#</th>
+                                        <th></th>
+                                        <th>Item</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% OrderDetails.forEach(function(item) { %>
+                                        <% item.forEach(function(orderDetail, index) { %>
+                                            <% totalQuantity += orderDetail.Quantity; %>
+                                            <tr>
+                                                <td><%= index + 1 %></td>
+                                                <td><img src="<%= orderDetail.Image %>" alt="Product Image" class="img-fluid rounded" style="height: 80px; width: 80px;"></td>
+                                                <td><%= orderDetail.ProductName %></td>
+                                                <td><%= orderDetail.Quantity %> ชิ้น</td>
+                                                <td><%= orderDetail.Price %> บาท</td>
+                                            </tr>
+                                        <% }) %>
+                                    <% }) %>
+                                    <tr class="font-weight-bold">
+                                        <td colspan="3" class="text-right">Total</td>
+                                        <td><%= totalQuantity %> ชิ้น</td>
+                                        <td><%= itemOrder.totalPrice %> บาท</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        <% } else { %>
+                            <p class="alert alert-warning">No order details available T-T</p>
+                        <% } %>
+                    </div>
 
+                    <div class="customer-receipt mt-5">
+                        <h5>Customer Receipt</h5>
+                        <img src="/<%= itemOrder.CustomerReceipt %>" alt="Receipt Image" class="img-fluid border rounded shadow-sm" style="max-height: 500px;">
+                    </div>
+
+                <% }) %>
+            <% } else { %>
+                <p class="alert alert-info">No orders available T-T</p>
+            <% } %>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Submit form for changing order status
+        document.getElementById('orderstatus').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Prevent form from submitting the default way
+    
+            const formData = new FormData(this);
+            const orderID = formData.get('OrderID');
+            const orderStatus = formData.get('OrderStatus');
+    
+            $.ajax({
+                url: '/order_all/orderByOrderID/changeStatus',
+                method: 'POST',
+                data: {
+                    OrderID: orderID,
+                    OrderStatus: orderStatus
+                },
+                success: function(response) {
+                    console.log('Status updated successfully:', response); // Log successful response
+                    window.location.href = '/order_all'; // Reload the page after success
+                },
+                error: function(error) {
+                    console.error('Error updating status:', error); // Log error
+                    alert('Error updating status');
+                }
+            });
+        });
+    
+        // Submit form for changing shipper
+        document.getElementById('shippers').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Prevent form from submitting the default way
+    
+            const formData = new FormData(this);
+            const orderID = formData.get('OrderID');
+            const orderShippers = formData.get('OrderShippers');
+    
+            $.ajax({
+                url: '/order_all/orderByOrderID/changeShippers',
+                method: 'POST',
+                data: {
+                    OrderID: orderID,
+                    OrderShippers: orderShippers // Use correct variable here
+                },
+                success: function(response) {
+                    console.log('Shipper updated successfully:', response); // Log successful response
+                    window.location.href = '/order_all'; // Reload the page after success
+                },
+                error: function(error) {
+                    console.error('Error updating shipper:', error); // Log error
+                    alert('Error updating shipper');
+                }
+            });
+        });
+    </script>
+    
 </body>
 
 </html>

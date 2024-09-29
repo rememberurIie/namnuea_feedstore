@@ -11,7 +11,7 @@ router.get('/order_all', async function (req, res, next) {
     //   res.redirect('/');
     // } else {
     try {
-        const orders = await query('SELECT *, (SELECT AccountName FROM account WHERE AccountID = orders.AccountID) AS AccountName FROM `orders`');
+        const orders = await query('SELECT *, (SELECT AccountName FROM account WHERE AccountID = orders.AccountID) AS AccountName, (SELECT ShipperName FROM Shippers WHERE ShipperID = orders.ShipperID) AS ShipperName FROM `orders`')
         res.render('admin/order_all', {
             loggedIn: req.session.loggedIn,
             AccountID: req.session.AccountID,
@@ -34,11 +34,11 @@ router.get('/order_all/status', async function (req, res, next) {
     try {
         var orders;
         if (status == 'Payment Checking' || status == 'Payment Complete, Wait for Shipping' || status == 'Shipping' || status == 'Shipped') {
-            orders = await query('SELECT *, (SELECT AccountName FROM account WHERE AccountID = orders.AccountID) AS AccountName FROM `orders` WHERE OrderStatus = ?', [status]);
+            orders = await query('SELECT *, (SELECT AccountName FROM account WHERE AccountID = orders.AccountID) AS AccountName, (SELECT ShipperName FROM Shippers WHERE ShipperID = orders.ShipperID) AS ShipperName FROM `orders` WHERE OrderStatus = ?', [status]);
         } else if (status == 'all') {
-            orders = await query('SELECT *, (SELECT AccountName FROM account WHERE AccountID = orders.AccountID) AS AccountName FROM `orders`');
+            orders = await query('SELECT *, (SELECT AccountName FROM account WHERE AccountID = orders.AccountID) AS AccountName, (SELECT ShipperName FROM Shippers WHERE ShipperID = orders.ShipperID) AS ShipperName FROM `orders`');
         } else {
-            orders = await query('SELECT *, (SELECT AccountName FROM account WHERE AccountID = orders.AccountID) AS AccountName FROM `orders`');
+            orders = await query('SELECT *, (SELECT AccountName FROM account WHERE AccountID = orders.AccountID) AS AccountName, (SELECT ShipperName FROM Shippers WHERE ShipperID = orders.ShipperID) AS ShipperName FROM `orders`');
             status = 'all';
         }
         res.render('admin/order_all', {
@@ -59,7 +59,7 @@ router.get('/order_all/status', async function (req, res, next) {
 router.get('/order_all/getOrderByOrderID', async function (req, res) {
     const OrderID = parseInt(req.query.OrderID);
     try {
-        var sqlOrder = 'SELECT *, (SELECT AccountName FROM account WHERE AccountID = orders.AccountID) AS AccountName FROM `orders` WHERE OrderID = ?';
+        var sqlOrder = 'SELECT *, (SELECT AccountName FROM account WHERE AccountID = orders.AccountID) AS AccountName, (SELECT ShipperName FROM Shippers WHERE ShipperID = orders.ShipperID) AS ShipperName FROM `orders` WHERE OrderID = ?';
         var sqlOrderByOrderID = 'SELECT *, (SELECT ProductName FROM product WHERE ProductID = orderdetails.ProductID) AS ProductName, (SELECT Image FROM product WHERE ProductID = orderdetails.ProductID) AS Image FROM `orderdetails` WHERE OrderID = ?';
         console.log("OrderID", OrderID);
         const order = await query(sqlOrder, [OrderID]);
@@ -102,16 +102,30 @@ router.get('/order_all/orderByOrderID', function(req, res) {
 });
 
 router.post('/order_all/orderByOrderID/changeStatus', async function (req, res) {
-    const {OrderID, OrderStatus} = req.query;
+
+    const { OrderID, OrderStatus } = req.body;
+
     try {
-        var sql = 'UPDATE `orders` SET OrderStatus = ? WHERE OrderID = ?';
+        var sql = 'UPDATE orders SET OrderStatus = ? WHERE OrderID = ?';
         await query(sql, [OrderStatus, OrderID]);
+        res.redirect('/order_all')
     } catch (error) {
-        console.error('Error update status', error);
-        res.status(400).send('Bad Request');
+        console.error('Error updating status:', error);
     }
 });
 
+router.post('/order_all/orderByOrderID/changeShippers', async function (req, res) {
 
+    const { OrderID, OrderShippers } = req.body;
+    console.log(OrderShippers)
+
+    try {
+        var sql = 'UPDATE orders SET ShipperID = ? WHERE OrderID = ?';
+        await query(sql, [OrderShippers, OrderID]);
+        res.redirect('/order_all')
+    } catch (error) {
+        console.error('Error updating shippers:', error);
+    }
+});
 
 module.exports = router;
