@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Product</title>
+    <link rel='stylesheet' href='/stylesheets/admin.css' />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Add date picker -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+
+<body>
+
+    <%- include('../partials/topbar') %>
+    <%- include('../partials/sidebar') %>
+
+    <div class="content">
+        <h2>Add New Product</h2>
+        <form id="addProductForm" method="POST" action="/add-product">
+            <div class="form-group">
+                <label for="ProductName">Product Name</label>
+                <input type="text" class="form-control" id="ProductName" name="ProductName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="Image">Image</label>
+                <input type="text" class="form-control" id="Image" name="Image" required>
+            </div>
+
+            <div class="form-group">
+                <label for="SupplierName">Supplier Name</label>
+                <select id="SupplierName" class="form-control" name="SupplierID">
+                    <% suppliers.forEach(function(supplier) { %>
+                        <option value="<%= supplier.SupplierID %>">
+                            <%= supplier.SupplierName %>
+                        </option>
+                    <% }); %>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="CategoryName">Category Name</label>
+                <select id="CategoryName" class="form-control" name="CategoryID" onchange="loadSubCategories(this.value)">
+                    <% categories.forEach(function(category) { %>
+                        <option value="<%= category.CategoryID %>">
+                            <%= category.CategoryName %>
+                        </option>
+                    <% }); %>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="SubCategoryName">SubCategory Name</label>
+                <select id="SubCategoryName" class="form-control" name="SubCategoryID">
+                    <!-- Options will be populated by JS based on Category selection -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="Price">Price</label>
+                <input type="number" class="form-control" id="Price" name="Price" required>
+            </div>
+
+            <div class="form-group">
+                <label for="Stock">Stock</label>
+                <input type="number" class="form-control" id="Stock" name="Stock" required>
+            </div>
+
+            <div class="form-group">
+                <label for="Exp">Expiry Date</label>
+                <input type="text" class="form-control" id="Exp" name="Exp" required>
+            </div>
+
+            <div class="form-group">
+                <label for="MFG">Manufacture Date</label>
+                <input type="text" class="form-control" id="MFG" name="MFG" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add Product</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+        // Date picker for Exp and MFG
+        $(function() {
+            $("#Exp, #MFG").datepicker({ dateFormat: 'yy-mm-dd' });
+        });
+
+        // Load SubCategories based on Category
+        function loadSubCategories(categoryID) {
+            $.ajax({
+                url: '/get-subcategories/' + categoryID,
+                type: 'GET',
+                success: function(data) {
+                    $('#SubCategoryName').empty();
+                    data.forEach(function(subcategory) {
+                        $('#SubCategoryName').append(new Option(subcategory.SubCategoryName, subcategory.SubCategoryID));
+                    });
+                }
+            });
+        }
+    </script>
+
+</body>
+
+</html>

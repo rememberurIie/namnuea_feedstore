@@ -16,6 +16,7 @@ var myaccountRouter = require('./routes/myaccount')
 var orderAll = require('./routes/order_all');
 var orderManage = require('./routes/order_manage');
 var overAll = require('./routes/overall');
+var productManage = require('./routes/product_manage');
 
 var app = express();
 
@@ -47,6 +48,7 @@ app.use('/', myaccountRouter);
 app.use('/',orderAll);
 app.use('/',orderManage);
 app.use('/',overAll);
+app.use('/',productManage);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

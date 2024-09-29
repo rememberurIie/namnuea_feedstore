@@ -30,9 +30,10 @@ router.post('/auth', function (req, res) {
                         req.session.AccountName = results[0].AccountName;
                         req.session.AccountType = results[0].AccountType; // เก็บ UserName ไว้ใน session
                         console.log('Session AccountID:', req.session.AccountID);
-                        await connection.query('INSERT INTO `log`(`AccountID`) VALUES (?)',req.session.AccountID);
+
                         // เปลี่ยนเส้นทางตาม AccountType
                         if (results[0].AccountType === 'Admin' || results[0].AccountType === 'Employee') {
+                            await connection.query('INSERT INTO `log`(`AccountID`) VALUES (?)', req.session.AccountID);
                             res.redirect('/order_all?login=success'); // เปลี่ยนเส้นทางไปยังหน้า admin
                         } else if (results[0].AccountType === 'Customer') {
                             res.redirect('/?login=success'); // เปลี่ยนเส้นทางไปยังหน้า customer

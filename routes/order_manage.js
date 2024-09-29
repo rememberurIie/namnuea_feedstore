@@ -10,11 +10,13 @@ router.get('/order_manage', function (req, res, next) {
     // if (!req.session.loggedIn && req.session.AccountType != 'Admin') {
     //   res.redirect('/');
     // } else {
+    const categories = query('SELECT * FROM `categories`');
       res.render('admin/order_manage', { 
         loggedIn: req.session.loggedIn, 
         AccountID: req.session.AccountID, 
         AccountName: req.session.AccountName, 
         AccountType: req.session.AccountType, 
+        Categories : categories,
         title: 'จัดการสินค้า' });
     // }
   });

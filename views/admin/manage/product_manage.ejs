@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%=title%>
+    </title>
+    <link rel='stylesheet' href='/stylesheets/admin.css' />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <%- include('../partials/topbar') %>
+
+        <%- include('../partials/sidebar') %>
+
+            <div class="content">
+                <a href="/add-product"><button class="btn btn-primary">Add Product</button></a> <br>
+                <% if (Products && Products.length> 0) { %>
+                    <table class="table table-bordered table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>#</th>
+                                <th></th>
+                                <th>Item</th>
+                                <th>Supplier</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Exp</th>
+                                <th>MFG</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <% Products.forEach(function(product) { %>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <%=product.ProductID%>
+                                    </td>
+                                    <td><img src="<%= product.Image %>" alt="Product Image" class="img-fluid rounded"
+                                            style="height: 80px; width: 80px;"></td>
+                                    <td>
+                                        <%=product.ProductName%>
+                                    </td>
+                                    <td>
+                                        <%=product.SupplierName%>
+                                    </td>
+                                    <td>
+                                        <%=product.Description%>
+                                    </td>
+                                    <td>
+                                        <%=product.Price%> บาท
+                                    </td>
+                                    <td>
+                                        <%=product.Stock%>
+                                    </td>
+                                    <td>
+                                        <%= new Date(product.Exp).toLocaleString('th-TH', { day: 'numeric' ,
+                                            month: 'short' , year: 'numeric' }) %>
+                                    </td>
+                                    <td>
+                                        <%= new Date(product.MFG).toLocaleString('th-TH', { day: 'numeric' ,
+                                            month: 'short' , year: 'numeric' }) %>
+                                    </td>
+                                    <td>
+                                        <a href="/edit-product/<%=product.ProductID%>"><button class="btn btn-warning">แก้ไข</button></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <% }) %>
+                    </table>
+                    <% } else { %>
+                        <p>product no data</p>
+                        <% } %>
+
+            </div>
+
+</body>
+
+</html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+    
+
+    function deleteProduct(id) {
+        $.ajax({
+                url: '/delete-product',
+                method: 'POST',
+                data: {
+                    productID : id
+                },
+                success: function(response) {
+                    console.log('delete product successfully:', response); // Log successful response
+                    window.location.href = '/product_manage'; // Reload the page after success
+                },
+                error: function(error) {
+                    console.error('Error delete product:', error); // Log error
+                    alert('Error delete product');
+                }
+            });
+    }
+</script>
