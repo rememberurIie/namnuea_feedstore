@@ -118,12 +118,14 @@ th {
   table {
       width: 70%;
   }
+}
 
-  #submit{
-      margin-right: 14.9%;
-  }
-
-  #CurrentTotalPrice{
-      margin-right: 14.9%;
-  }
+.topbar {
+  position: fixed; /* Keeps the topbar at the top */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Ensure this is higher than any other overlapping elements */
+  background-color: white; /* Adjust as needed */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for better visibility */
 }

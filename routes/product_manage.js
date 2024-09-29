@@ -7,14 +7,28 @@ const util = require('util');
 const query = util.promisify(connection.query).bind(connection);
 
 router.get('/product_manage', async function (req, res, next) {
-    // if (!req.session.loggedIn && req.session.AccountType != 'Admin') {
-    //   res.redirect('/');
-    // } else {
     try {
-        var productSql = `SELECT ProductID, ProductName ,suppliers.SupplierName, categories.Description, Price, Stock, Exp, MFG, product.Image FROM product
-INNER JOIN suppliers ON suppliers.SupplierID = product.SupplierID
-INNER JOIN categories ON categories.CategoryID = product.CategoryID`;
-        const products = await query(productSql);
+        // Get the search query from the URL parameters
+        const searchQuery = req.query.search || '';
+
+        // SQL query to fetch products, joined with suppliers and categories
+        let productSql = `SELECT ProductID, ProductName, suppliers.SupplierName, 
+                            categories.Description, Price, Stock, Exp, MFG, product.Image 
+                          FROM product
+                          INNER JOIN suppliers ON suppliers.SupplierID = product.SupplierID
+                          INNER JOIN categories ON categories.CategoryID = product.CategoryID`;
+
+        // Execute the query to get all products
+        let products = await query(productSql);
+
+        // If there's a search query, filter the products by ProductName
+        if (searchQuery) {
+            products = products.filter(product =>
+                product.ProductName.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+        }
+
+        // Render the page, passing the filtered products and session data
         res.render('admin/manage/product_manage', {
             loggedIn: req.session.loggedIn,
             AccountID: req.session.AccountID,
@@ -23,12 +37,13 @@ INNER JOIN categories ON categories.CategoryID = product.CategoryID`;
             Products: products,
             title: 'จัดการสินค้า'
         });
+
     } catch (error) {
         console.error('Error: /product_manage ', error);
         res.status(500).send('Internal Server Error /product_manage');
     }
-    // }
 });
+
 
 router.get('/add-product', async (req, res) => {
     try {
