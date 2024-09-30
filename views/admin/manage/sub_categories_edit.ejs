@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+    <link rel='stylesheet' href='/stylesheets/admin.css' />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Add date picker -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+
+<body>
+
+    <%- include('../partials/topbar') %>
+        <%- include('../partials/sidebar') %>
+
+            <div class="content" style="padding: 40px; margin-top: -20px" >
+                <h2>Edit Sub Category</h2>
+                <form id="editProductForm" method="POST" action="/edit-sub_category/<%= SubCategory.SubCategoryID %>">
+                    <div class="form-group">
+                        <label for="Image">Sub Category Image</label>
+                        <img src="<%= SubCategory.Image %>" alt="SubCategory Image" class="img-fluid rounded"
+                            style="height: 120px; width: 120px;">
+                        <input type="text" class="form-control" id="Image" name="Image" value="<%= SubCategory.Image %>"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="SubCategoryName">Sub Category Name</label>
+                        <input type="text" class="form-control" id="SubCategoryName" name="SubCategoryName"
+                            value="<%= SubCategory.SubCategoryName %>" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="SupplierName">Supplier Name</label>
+                        <select id="CategoryID" class="form-control" name="CategoryID">
+                            <% Categories.forEach(function(category,index) { %>
+                                <option value="<%= category.CategoryID%>" <% if
+                                    (category.CategoryID===SubCategory.CategoryID) { %> selected <% } %>>
+                                        <%= category.CategoryName%>
+                                </option>
+                                <% }); %>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="CategoryDescription">Description</label>
+                        <input type="text" class="form-control" id="Description" name="Description"
+                            value="<%= SubCategory.Description %>" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+
+</body>
+
+</html>

@@ -38,13 +38,15 @@
                         </div>
                                 <div id="selector" class="row">
                                     <% Categories.forEach(function(item, index) { %>
-                                        <div id="image" class="col-lg-2">
-                                            <a href="/category/<%=item.CategoryName%>">
-                                                <img
-                                                    src="<%=item.Image%>">
-                                                <p><%=item.Description%></p>
-                                            </a>
-                                        </div>
+                                        <%if (item.CategoryStatus != 'Offline') { %>
+                                            <div id="image" class="col-lg-2">
+                                                <a href="/category/<%=item.CategoryName%>">
+                                                    <img
+                                                        src="<%=item.Image%>">
+                                                    <p><%=item.Description%></p>
+                                                </a>
+                                            </div>
+                                        <% } %>
                                         <% }); %>
                                 </div>
                     </div>

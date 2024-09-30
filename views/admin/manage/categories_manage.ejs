@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%=title%>
+    </title>
+    <link rel='stylesheet' href='/stylesheets/admin.css' />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <%- include('../partials/topbar') %>
+
+        <%- include('../partials/sidebar') %>
+
+            <div class="content" style="padding: 40px; margin-top: -10px">
+                <h2>Categories Manage</h2><br>
+                <div class="d-flex justify-content-between align-items-center">
+                    <!-- Search Form -->
+                    <form class="form-inline" action="/categories_manage" method="GET">
+                        <input class="form-control mr-sm-2" type="search" name="search"
+                            placeholder="Search category name" aria-label="Search">
+                        <button class="btn btn-success" type="submit">Search</button>
+
+                    </form>
+
+                </div>
+                <br>
+                <a href="/add-category" style="margin-left: 5px;"><button class="btn btn-primary">Add
+                        Categories</button></a>
+                <br>
+                <br>
+                <% if (Categories && Categories.length> 0) { %>
+                    <table class="table table-bordered table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>#</th>
+                                <th></th>
+                                <th>Category</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <% Categories.forEach(function(category) { %>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <%= category.CategoryID %>
+                                    </td>
+                                    <td><img src="<%= category.Image %>" alt="Product Image" class="img-fluid rounded"
+                                            style="height: 80px; width: 80px;"></td>
+                                    <td>
+                                        <%= category.CategoryName %>
+                                    </td>
+                                    <td>
+                                        <%= category.Description %>
+                                    </td>
+                                    <td>
+                                        <%= category.CategoryStatus %>
+                                    </td>
+                                    <td><a href="/edit-category/<%= category.CategoryID %>">
+                                            <button class="btn btn-warning">แก้ไข</button>
+                                        </a></td>
+                                </tr>
+                            </tbody>
+                            <% }) %>
+                    </table>
+                    <% } else { %>
+                        <p>No category found</p>
+                        <% } %>
+            </div>
+
+</body>
+
+</html>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function deleteProduct(id) {
+        $.ajax({
+            url: '/delete-product',
+            method: 'POST',
+            data: {
+                productID: id
+            },
+            success: function (response) {
+                console.log('Deleted product successfully:', response);
+                window.location.href = '/product_manage';
+            },
+            error: function (error) {
+                console.error('Error deleting product:', error);
+                alert('Error deleting product');
+            }
+        });
+    }
+</script>

@@ -17,6 +17,7 @@ var orderAll = require('./routes/order_all');
 var orderManage = require('./routes/order_manage');
 var overAll = require('./routes/overall');
 var productManage = require('./routes/product_manage');
+var categoriesManage = require('./routes/categories_manage');
 
 var app = express();
 
@@ -49,6 +50,7 @@ app.use('/',orderAll);
 app.use('/',orderManage);
 app.use('/',overAll);
 app.use('/',productManage);
+app.use('/',categoriesManage);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
