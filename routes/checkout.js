@@ -47,13 +47,14 @@ router.get('/checkout/:AccountID', async (req, res) => {
    }
 });
 
-// Configure multer for file uploads
 const storage = multer.diskStorage({
    destination: (req, file, cb) => {
-      cb(null, 'image/receipt');
+      // Save the file in the 'public/image/receipt' directory
+      cb(null, 'public/image/receipt');
    },
    filename: (req, file, cb) => {
-      cb(null, Date.now() + path.extname(file.originalname)); // Use current timestamp as filename
+      // Use current timestamp as filename
+      cb(null, Date.now() + path.extname(file.originalname));
    }
 });
 
@@ -64,7 +65,11 @@ router.post('/upload/receipt', upload.single('filename'), (req, res) => {
    if (!req.file) {
       return res.status(400).send('No file uploaded.');
    }
-   const customerReceipt = path.join('image/receipt', req.file.filename);
+
+   // Save path for database (excluding 'public' folder)
+   const customerReceipt = path.join('image', 'receipt', req.file.filename).replace(/\\/g, '/');
+
+   // Return the path that will be saved in the database
    res.json({ CustomerReceipt: customerReceipt });
 });
 
