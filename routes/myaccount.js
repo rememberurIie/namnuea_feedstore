@@ -24,7 +24,7 @@ router.get('/myaccount', async (req, res) => {
 			// Step 2: Fetch order details for each order
 			const orderDetailsPromises = orders.map(async (order) => {
 					const orderDetails = await query(`
-						SELECT od.OrderDetailID, od.OrderID, p.ProductName, p.Image, p.Price, od.Quantity
+						SELECT od.OrderDetailID, od.OrderID, p.ProductName, p.Image, od.Price, od.Quantity
 						FROM orderdetails od
 						JOIN product p ON od.ProductID = p.ProductID
 						WHERE od.OrderID = ?`, 
