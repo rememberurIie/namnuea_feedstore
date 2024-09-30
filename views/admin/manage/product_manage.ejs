@@ -21,15 +21,16 @@
 
     <div class="content" style="padding: 40px; margin-top: -10px">
         <h2>Product Manage</h2><br>
+        
         <div class="d-flex justify-content-between align-items-center">
             <!-- Search Form -->
             <form class="form-inline" action="/product_manage" method="GET">
                 <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search Productnmme" aria-label="Search">
                 <button class="btn btn-success" type="submit">Search</button>
-					 <a href="/add-product" style="margin-left: 5px;"><button class="btn btn-primary">Add Product</button></a>
             </form>
-
         </div>
+        <br>
+        <a href="/add-product"><button class="btn btn-primary">Add Product</button></a> <br>
         <br>
 
         <% if (Products && Products.length > 0) { %>
