@@ -9,9 +9,9 @@ const query = util.promisify(connection.query).bind(connection);
 router.get('/suppliers_manage', async (req, res) => {
     try {
         const searchQuery = req.query.search || '';
-        const suppliers = await query('SELECT * FROM suppliers');
+        let suppliers = await query('SELECT * FROM suppliers');
         if (searchQuery) {
-            subCategories = suppliers.filter(suppliers =>
+            suppliers = suppliers.filter(suppliers =>
                 suppliers.SupplierName.toLowerCase().includes(searchQuery.toLowerCase())
             );
         }
