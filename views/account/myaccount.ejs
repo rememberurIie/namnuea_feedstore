@@ -70,7 +70,7 @@
 									}); %></strong></span><br>
                         </div>
                         <div class="text-end">
-                            <span><b>Order Total : </b><strong class="text-danger">฿<%= order.items.reduce((total, item) => total + item.Price * item.Quantity, 0).toFixed(2) %></strong></span>
+                            <span><b>Order Total : </b><strong class="text-danger">฿<%= order.totalPrice%></strong></span>
                         </div>
                     </div>
                 </div>
