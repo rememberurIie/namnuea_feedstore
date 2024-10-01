@@ -1,23 +1,126 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title><%=title%></title>
+	<title>
+		<%= title %>
+	</title>
 	<link rel='stylesheet' href='/stylesheets/admin.css' />
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
+
 <body>
 
 	<%- include('partials/topbar') %>
+		<%- include('partials/sidebar') %>
 
-	<%- include('partials/sidebar') %>
-
-	<div class="content">
-		<h2>Coming Soon</h2>
-		
-	</div>
+		<div class="content">
+			<h2>ข้อมูลสรุป</h2>
+			
+			<form method="get" action="/overall">
+			  <label for="year">เลือกปี:</label>
+			  <select name="year" id="year" onchange="this.form.submit()">
+				<% for (let year of yearSales) { %>
+				  <option value="<%= year.year %>" <%= year.year == selectedYear ? 'selected' : '' %>><%= year.year %></option>
+				<% } %>
+			  </select>
+		  
+			  <label for="month">เลือกเดือน:</label>
+			  <select name="month" id="month" onchange="this.form.submit()">
+				<% for (let i = 1; i <= 12; i++) { %>
+				  <option value="<%= i %>" <%= i == selectedMonth ? 'selected' : '' %>><%= i %></option>
+				<% } %>
+			  </select>
+			</form>
+		  
+			<h3>ยอดขายตามเดือนในปี <%= selectedYear %></h3>
+			<canvas id="monthlySalesChart" width="400" height="100"></canvas>
+		  
+			<h3>ยอดขายรายวันในเดือน <%= selectedMonth %> ปี <%= selectedYear %></h3>
+			<canvas id="dailySalesChart" width="400" height="100"></canvas>
+		  </div>
+		  
+		  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		  <script>
+			// กราฟยอดขายตามเดือน
+			const ctxMonthly = document.getElementById('monthlySalesChart').getContext('2d');
+			const monthlySalesChart = new Chart(ctxMonthly, {
+				type: 'bar',
+				data: {
+					labels: ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'],
+					datasets: [{
+						label: 'ยอดขาย',
+						data: JSON.parse('<%= JSON.stringify(salesData) %>'),
+						backgroundColor: [
+							'rgba(75, 192, 192, 0.2)',
+							'rgba(153, 102, 255, 0.2)',
+							'rgba(255, 159, 64, 0.2)',
+							'rgba(75, 192, 192, 0.2)',
+							'rgba(153, 102, 255, 0.2)',
+							'rgba(255, 159, 64, 0.2)',
+							'rgba(75, 192, 192, 0.2)',
+							'rgba(153, 102, 255, 0.2)',
+							'rgba(255, 159, 64, 0.2)',
+							'rgba(75, 192, 192, 0.2)',
+							'rgba(153, 102, 255, 0.2)',
+							'rgba(255, 159, 64, 0.2)'
+						],
+						borderColor: [
+							'rgba(75, 192, 192, 1)',
+							'rgba(153, 102, 255, 1)',
+							'rgba(255, 159, 64, 1)',
+							'rgba(75, 192, 192, 1)',
+							'rgba(153, 102, 255, 1)',
+							'rgba(255, 159, 64, 1)',
+							'rgba(75, 192, 192, 1)',
+							'rgba(153, 102, 255, 1)',
+							'rgba(255, 159, 64, 1)',
+							'rgba(75, 192, 192, 1)',
+							'rgba(153, 102, 255, 1)',
+							'rgba(255, 159, 64, 1)'
+						],
+						borderWidth: 1
+					}]
+				},
+				options: {
+					scales: {
+						y: {
+							beginAtZero: true
+						}
+					}
+				}
+			});
+		  
+			// กราฟยอดขายรายวัน
+			const ctxDaily = document.getElementById('dailySalesChart').getContext('2d');
+			const dailySalesChart = new Chart(ctxDaily, {
+				type: 'line',
+				data: {
+					labels: Array.from({ length: 31 }, (_, i) => i + 1), // วันที่ 1-31
+					datasets: [{
+						label: 'ยอดขายรายวัน',
+						data: JSON.parse('<%= JSON.stringify(dailySalesData) %>'),
+						fill: false,
+						borderColor: 'rgba(75, 192, 192, 1)',
+						tension: 0.1
+					}]
+				},
+				options: {
+					scales: {
+						y: {
+							beginAtZero: true
+						}
+					}
+				}
+			});
+		  </script>
+		  
 
 </body>
+
 </html>
