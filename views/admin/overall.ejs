@@ -18,8 +18,8 @@
 	<%- include('partials/topbar') %>
 		<%- include('partials/sidebar') %>
 
-		<div class="content">
-			<h2>ข้อมูลสรุป</h2>
+		<div class="content" style="padding: 40px;">
+			<b style="font-size: 40px;">ข้อมูลสรุป</b>
 			
 			<form method="get" action="/overall">
 			  <label for="year">เลือกปี:</label>
@@ -37,10 +37,12 @@
 			  </select>
 			</form>
 		  
-			<h3>ยอดขายตามเดือนในปี <%= selectedYear %></h3>
+			<br>
+			<b style="font-size: 30px;">ยอดขายตามเดือนในปี <%= selectedYear %></b>
 			<canvas id="monthlySalesChart" width="400" height="100"></canvas>
-		  
-			<h3>ยอดขายรายวันในเดือน <%= selectedMonth %> ปี <%= selectedYear %></h3>
+			
+			<br>
+			<b style="font-size: 30px;">ยอดขายรายวันในเดือน <%= selectedMonth %> ปี <%= selectedYear %></b>
 			<canvas id="dailySalesChart" width="400" height="100"></canvas>
 		  </div>
 		  
