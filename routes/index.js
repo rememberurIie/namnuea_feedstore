@@ -1,11 +1,34 @@
 var express = require('express');
 var router = express.Router();
 var session = require('express-session');
+var mysql = require('../connect');
 
 /* GET home page. */
 
 router.get('/', function (req, res) {
-  res.render('index', { loggedIn: req.session.loggedIn, AccountID: req.session.AccountID, AccountName: req.session.AccountName, AccountType: req.session.AccountType, title: 'Express' });
+  var sql = `SELECT P.* 
+              FROM Product P
+              JOIN (
+                  SELECT productid
+                  FROM OrderDetails
+                  GROUP BY productid
+                  ORDER BY SUM(quantity) DESC
+                  LIMIT 3
+              ) AS top_products
+              ON P.productid = top_products.productid;`;
+  mysql.query(sql, req.params.SubCategoryID, (err, products) => {
+      if (err) {
+          res.send(err);
+      } else {
+          res.render('index', {
+              loggedIn: req.session.loggedIn,
+              Products: products,
+              AccountID: req.session.AccountID,
+              AccountName: req.session.AccountName,
+              Title: req.session.Title,
+          });
+      }
+  });
 });
 
 // router.get('/category', function (req, res, next) {

@@ -3,9 +3,10 @@
 
 <head>
   <title>
-    <%= title %>
+    <%= Title %>
   </title>
   <link rel='stylesheet' href='/stylesheets/mainpage.css' />
+  <link rel='stylesheet' href='/stylesheets/sub_category.css' />
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
@@ -23,14 +24,14 @@
     </div>
   </div>
 
-  <div id="content" style="padding-bottom: 250px" class="row">
+  <div id="content" style="margin-top: -30px; margin-bottom: 30px" class="row">
     <div class="col-lg-12">
       <div id="img-slides" class="w3-content w3-display-container">
-        <img src="https://www.phfl.com/wp-content/uploads/2019/05/Rotating-Banner_HomeLoan-1366x480-01.jpg"
+        <img src="images/petbanner1.jpg"
           class="img-fluid" alt="Responsive image">
-        <img src="https://www.phfl.com/wp-content/uploads/2020/09/rotating-banner-lap-new.jpg" class="img-fluid"
+        <img src="images/petbanner2.jpg" class="img-fluid"
           alt="Responsive image">
-        <img src="https://www.phfl.com/wp-content/uploads/2019/03/rotating-banner-generic-phfl.jpg" class="img-fluid"
+        <img src="images/petbanner3.jpg" class="img-fluid"
           alt="Responsive image">
 
         <div class="w3-center w3-container w3-section w3-large w3-text-white w3-display-bottommiddle"
@@ -44,6 +45,38 @@
 
       </div>
     </div>
+
+    <div style="margin: 50px auto -40px">
+      <p id="topic-name" >Top 3 Best Seller</p>
+      <p id="topic-description" style="display: flex; justify-content: center; margin-top: -20px;">3 สินค้าที่ขายดีที่สุด</p>
+    </div>
+
+    <div id="selector" class="row">
+      <% Products.forEach(function(item, index) { %>
+          <% if (item.ProductStatus != 'Offline') { %>
+              <div id="image" class="col-lg-4">
+                  <img src="<%= item.Image %>">
+                  <p style="margin-left: 30px; margin-right: 30px;">
+                      <%= item.ProductName %>
+                  </p>
+                  <p>ราคา <%= item.Price %> บาท</p>
+                  <div class="button">
+                      <% if (typeof AccountName !== 'undefined') { %>
+                          <button type="button" class="btn btn-dark add-to-cart" 
+                                  data-product-id="<%= item.ProductID %>" 
+                                  data-product-name="<%= item.ProductName %>" 
+                                  data-price="<%= item.Price %>">
+                              Add to Cart
+                          </button>
+                      <% } else { %>
+                          <a href="/login"><button type="button" class="btn btn-light">เข้าสู่ระบบ</button></a>
+                      <% } %>
+                  </div>
+              </div>
+          <%}%>
+      <% }); %>
+  </div>
+
   </div>
 
 

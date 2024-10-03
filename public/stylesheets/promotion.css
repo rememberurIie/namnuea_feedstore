@@ -1,5 +1,6 @@
 #content{
     padding-top: 30px;
+    padding-bottom: 30px;
 }
 
 #topic-name{
@@ -22,4 +23,21 @@
     width: 640px;
     height: auto;
     margin-bottom: 30px;
+}
+
+#data-text{
+    color: rgb(22, 22, 22);
+    display: flex;
+    align-items: center;
+    text-align: left;
+    /* margin-left: -6%; */
+}
+
+#data-pic{
+    text-align: center;
+}
+
+#data-box{
+    padding-bottom: 3vh;
+
 }

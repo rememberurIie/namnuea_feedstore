@@ -1,28 +1,58 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/mainpage.css'/>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  </head>
-  <body>
-    <div id="main">
-      <div class="container">
+<head>
+	<title><%= title %></title>
+	<link rel='stylesheet' href='/stylesheets/mainpage.css'/>
+	<link rel='stylesheet' href='/stylesheets/promotion.css' />
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+	<div id="main">
+		<div class="container">
 
-        <%- include('partials/login-header') %>
+		<%- include('partials/login-header') %>
 
-        <%- include('partials/header') %>
+		<%- include('partials/header') %>
 
-      </div>
-    </div>
+		</div>
+	</div>
 
-    <div id="content">
-    </div>
+	<div id="content">
 
-    <%- include('partials/footer') %>
+		<div id="topic">
+			<p id="topic-name">บทความเพื่อสัตว์เลี้ยง</p>
+		</div>
 
-  </div>
-  </body>
+		<div class="row" id="data-box">
+			<div class="col-sm-1"></div>
+			<div class="col-sm-4" id="data-pic">
+				<img src="https://down-th.img.susercontent.com/file/159f67544b45ae27bba26230138ef63c" width="auto" height="240px">
+			</div>
+			<div class="col-sm-6" id="data-text">
+				<p style="font-size: 20px;"><b>เบทาโกร 302 อาหารสุกร 18% โปรตีน</b><br>
+				เบทาโกร 302 อาหารสุกร 18% โปรตีน สำหรับสุกรน้ำหนัก 20-25 กิโลกรัมขึ้นไป เม็ดขนาด 4 มิลลิเมตร บรรจุ 30 กิโลกรัม</p>
+			</div>
+			<div class="col-sm-1"></div>
+		</div>
+		
+		<div class="row" id="data-box">
+			<div class="col-sm-1"></div>
+			<div class="col-sm-4" id="data-pic">
+				<img src="https://down-th.img.susercontent.com/file/159f67544b45ae27bba26230138ef63c" width="auto" height="240px">
+			</div>
+			<div class="col-sm-6" id="data-text">
+				<p style="font-size: 20px;"><b>เบทาโกร 302 อาหารสุกร 18% โปรตีน</b><br>
+				เบทาโกร 302 อาหารสุกร 18% โปรตีน สำหรับสุกรน้ำหนัก 20-25 กิโลกรัมขึ้นไป เม็ดขนาด 4 มิลลิเมตร บรรจุ 30 กิโลกรัม</p>
+		</div>
+			<div class="col-sm-1"></div>
+		</div>
+
+	</div>
+
+	<%- include('partials/footer') %>
+
+</div>
+</body>
 </html>

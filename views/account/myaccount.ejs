@@ -107,12 +107,10 @@
                 OrderID: OrderID // Sending OrderID as a query parameter
             },
             success: function(response) {
-                console.log("Get receipted. Order ID: " + OrderID);
+                alert('Get receipt for orderID ' + OrderID + ', Saved in C:\\Receipt');
             },
             error: function(error) {
-                console.log("Order ID:", OrderID);
                 alert('Get receipt error, Please try again.');
-                console.log("Error:", error);
                 return false;
             }
         });
