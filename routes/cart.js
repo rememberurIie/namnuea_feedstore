@@ -6,40 +6,57 @@ const connection = require('../connect');
 // Promisify connection.query for easier async/await handling
 const query = util.promisify(connection.query).bind(connection);
 
-// เพิ่มสินค้าในตะกร้า
 router.post('/cart/add', async (req, res) => {
     if (!req.session.loggedIn) {
-        res.redirect('/login');
-    } else {
-        try {
-            const { AccountID, ProductID, Quantity } = req.body;
+        return res.redirect('/login');
+    }
 
-            // ตรวจสอบว่าผู้ใช้นี้มีตะกร้าหรือยัง ถ้าไม่มีสร้างใหม่
-            let cart = await query('SELECT * FROM cart WHERE AccountID = ? AND Status = "pending"', [AccountID]);
+    try {
+        const { AccountID, ProductID, Quantity } = req.body;
 
-            if (cart.length === 0) {
-                await query('INSERT INTO cart (AccountID) VALUES (?)', [AccountID]);
-                cart = await query('SELECT * FROM cart WHERE AccountID = ? AND Status = "pending"', [AccountID]);
-            }
+        // ตรวจสอบว่าผู้ใช้นี้มีตะกร้าหรือยัง ถ้าไม่มีสร้างใหม่
+        let cart = await query('SELECT * FROM cart WHERE AccountID = ? AND Status = "pending"', [AccountID]);
 
-            // ตรวจสอบสินค้าก่อนที่จะเพิ่มในตะกร้า
-            const product = await query('SELECT * FROM product WHERE ProductID = ?', [ProductID]);
+        if (cart.length === 0) {
+            await query('INSERT INTO cart (AccountID) VALUES (?)', [AccountID]);
+            cart = await query('SELECT * FROM cart WHERE AccountID = ? AND Status = "pending"', [AccountID]);
+        }
 
-            if (product.length === 0 || product[0].Stock < Quantity) {
+        const CartID = cart[0].CartID;
+
+        // ตรวจสอบสินค้าก่อนที่จะเพิ่มในตะกร้า
+        const product = await query('SELECT * FROM product WHERE ProductID = ?', [ProductID]);
+
+        if (product.length === 0 || product[0].Stock < Quantity) {
+            return res.status(400).send('สินค้าไม่เพียงพอ');
+        }
+
+        // ตรวจสอบว่ามีสินค้านี้ในตะกร้าอยู่แล้วหรือไม่
+        let cartItem = await query('SELECT * FROM cart_items WHERE CartID = ? AND ProductID = ?', [CartID, ProductID]);
+
+        if (cartItem.length > 0) {
+            // ถ้ามีสินค้านี้ในตะกร้าอยู่แล้ว ให้เพิ่มจำนวน
+            const newQuantity = cartItem[0].Quantity + 1;
+
+            // ตรวจสอบว่าสินค้าในสต็อกเพียงพอหรือไม่
+            if (newQuantity > product[0].Stock) {
                 return res.status(400).send('สินค้าไม่เพียงพอ');
             }
 
-            // เพิ่มสินค้าในตะกร้า
-            await query('INSERT INTO cart_items (CartID, ProductID, Quantity, Price) VALUES (?, ?, ?, ?)',
-                [cart[0].CartID, ProductID, Quantity, product[0].Price]);
-
-            res.send('เพิ่มสินค้าในตะกร้าสำเร็จ');
-        } catch (error) {
-            console.error('Error adding item to cart:', error);
-            res.status(500).send('เกิดข้อผิดพลาดในการเพิ่มสินค้า');
+            await query('UPDATE cart_items SET Quantity = ? WHERE CartID = ? AND ProductID = ?', [newQuantity, CartID, ProductID]);
+        } else {
+            // ถ้าไม่มีสินค้านี้ในตะกร้า ให้เพิ่มสินค้าใหม่
+            await query('INSERT INTO cart_items (CartID, ProductID, Quantity, Price) VALUES (?, ?, ?, ?)', 
+                [CartID, ProductID, Quantity, product[0].Price]);
         }
+
+        res.send('เพิ่มสินค้าในตะกร้าสำเร็จ');
+    } catch (error) {
+        console.error('Error adding item to cart:', error);
+        res.status(500).send('เกิดข้อผิดพลาดในการเพิ่มสินค้า');
     }
 });
+
 
 // แสดงรายการในตะกร้า
 router.get('/cart/:AccountID', async (req, res) => {
