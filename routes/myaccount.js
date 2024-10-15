@@ -118,7 +118,7 @@ router.get('/myaccount/receipt', async (req, res, next) => {
 		doc.moveDown();
 
 		// Receipt title
-		doc.fontSize(13).text(`Order ID: #${OrderID}`, 50, 90, {align: 'left' });
+		doc.fontSize(13).text(`Receipt No. #${OrderID}`, 50, 90, {align: 'left' });
 		doc.moveDown();
 
 		// Customer details
